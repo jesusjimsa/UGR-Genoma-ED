@@ -85,6 +85,7 @@ xcuserdata/
 *.moved-aside
 *.xccheckout
 *.xcscmblueprint
+*.xcodeproj
 
 
 ### VisualStudioCode ###
