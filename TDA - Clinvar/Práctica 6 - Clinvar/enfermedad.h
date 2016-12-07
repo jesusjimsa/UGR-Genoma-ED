@@ -1,8 +1,11 @@
-/*
- * enfermedad.h
- *
- * Copyright  (C) Juan F. Huete y Carlos Cano
- */
+//
+//  enfermedad.h
+//  TDA - Clinvar
+//
+//  Created by Jesús Jiménez Sánchez on 7/12/16.
+//  Copyright © 2016 Jesús Jiménez Sánchez. All rights reserved.
+//
+
 #ifndef __ENFERMEDAD_H
 #define __ENFERMEDAD_H
 

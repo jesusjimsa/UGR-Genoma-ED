@@ -1,3 +1,11 @@
+//
+//  principal.cpp
+//  TDA - Clinvar
+//
+//  Created by Jesús Jiménez Sánchez on 7/12/16.
+//  Copyright © 2016 Jesús Jiménez Sánchez. All rights reserved.
+//
+
 #include <iostream>
 #include <fstream>
 #include <vector>
