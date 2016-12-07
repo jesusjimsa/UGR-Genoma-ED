@@ -12,7 +12,7 @@ mutacion::mutacion(){
 
 /**
  Suponemos que la mutación que nos pasan tiene bien los valores, es decir pos>1
- */
+*/
 mutacion::mutacion(const mutacion& m){
 	ID = m.getID();
 	chr = m.getChr();
