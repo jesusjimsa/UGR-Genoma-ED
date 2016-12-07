@@ -7,7 +7,7 @@ principal : principal.o enfermedad.o mutacion.o
 
 #Creación de archivos objeto
 
-principal.o: principal.cpp conjunto.h
+principal.o: principal.cpp
 	$(CPPFLAGS) principal.cpp -o principal.o -I.
 
 enfermedad.o: enfermedad.cpp
