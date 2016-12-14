@@ -38,7 +38,7 @@ mutacion::mutacion(const string & str){
 	bool extras = false;
 	unsigned int k = 0;
 	int j = 0;
-	int i = 0;
+	unsigned long i = 0;
 
 	cerr << "Invocado constructor mutacion::mutacion(str)" << endl;
 	// OBTENER CHR
