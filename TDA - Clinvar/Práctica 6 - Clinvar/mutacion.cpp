@@ -328,7 +328,7 @@ mutacion::mutacion(const string & str){
 		
 		if(strCln.size() >= 1){
 			int k = 0;
-			int m = strCln.size();
+			unsigned long m = strCln.size();
 			
 			while(k != m){
 				if(strCln[k] != '|' && strCln[k] != ','){
