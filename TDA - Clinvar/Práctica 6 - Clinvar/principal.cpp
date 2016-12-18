@@ -18,7 +18,7 @@
 using namespace std;
 using namespace std::chrono;
 
-bool load(vector<mutacion> &  vm, const string & s) {
+bool load(vector<Mutacion> &  vm, const string & s) {
 	ifstream fe;
 	string cadena;
 	
@@ -44,7 +44,7 @@ bool load(vector<mutacion> &  vm, const string & s) {
 			i++;
 			
 			// Invoco el constructor de mutación que recibe una cadena completa, la parsea y crea la mutación.
-			mutacion mut = mutacion(cadena);
+			Mutacion mut = Mutacion(cadena);
 			
 			// Insertar mutación en el vector
 			vm.push_back(mut);
@@ -63,7 +63,7 @@ bool load(vector<mutacion> &  vm, const string & s) {
 
 
 int main(int argc, char *argv[]){
-	vector<mutacion> vectorSNPs;
+	vector<Mutacion> vectorSNPs;
 	string query_str;
 	
 	if (argc>1){
