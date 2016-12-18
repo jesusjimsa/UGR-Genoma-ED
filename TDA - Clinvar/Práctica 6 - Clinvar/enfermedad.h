@@ -24,7 +24,7 @@ using namespace std;
  
  */
 
-class enfermedad {
+class Enfermedad {
 private:
 	string  name;       // nombre de la enfermedad. Almacenar completo en minúscula.
 	string  ID;         // ID único para la enfermedad
@@ -34,14 +34,14 @@ public:
 /**
 @brief Crea una enfermedad iniciando chr y pos a 1.
 */
- enfermedad (); //Constructor de enfermedad por defecto
+ Enfermedad (); //Constructor de enfermedad por defecto
 /**
 @brief Crea una enfermedad a partir de 3 cadenas de string.
 @param name	string con el nombre
 @param ID	string con el ID
 @param database	string con la base de datos que provee el ID
 */
- enfermedad (const string & name, const string & ID, const string & database);
+ Enfermedad (const string & name, const string & ID, const string & database);
 
 /**
 @brief Cambia el valor de name
@@ -93,7 +93,7 @@ Devuelve la base de datos de la enfermedad.
 	 
 Sobrecarga el operador de asignación para ajustarlo a enfermedades.
 */
- enfermedad & operator=(const enfermedad & e);
+ Enfermedad & operator=(const Enfermedad & e);
 /**
 @brief Convierte una enfermedad a una cadena string.
 @returns str	cadena a devolver con la enfermedad
@@ -109,14 +109,14 @@ Se convierte una enfermedad a una cadena string.
 	 
 Sobrecarga el operador de comparación para ajustarlo a una enfermedad.
 */
- bool operator==(const enfermedad & e) const;
+ bool operator==(const Enfermedad & e) const;
 /**
 @brief Sobrecarga del operador !=
 @param e	enfermedad a comparar
 	 
 Sobrecarga el operador de asignación para ajustarlo a enfermedades.
 */
- bool operator!=(const enfermedad & e) const;
+ bool operator!=(const Enfermedad & e) const;
 /**
 @brief Sobrecarga del operador <
 @param e	enfermedad a comparar
@@ -124,7 +124,7 @@ Sobrecarga el operador de asignación para ajustarlo a enfermedades.
 Sobrecarga el operador de asignación para comparar dos enfermedades en función del orden
 alfabético de l campo name.
 */
- bool operator<(const enfermedad & e) const;
+ bool operator<(const Enfermedad & e) const;
 
 /**
 @brief Devuelve si el nombre contiene el string argumentado.
@@ -152,7 +152,7 @@ Convierte la enfermedad en un string.
 
 Sobrecarga el operador << para imprimir una enfermedad con todos sus campos.
 */
-ostream& operator<< ( ostream& os, const enfermedad & e);
+ostream& operator<< ( ostream& os, const Enfermedad & e);
 
 
 

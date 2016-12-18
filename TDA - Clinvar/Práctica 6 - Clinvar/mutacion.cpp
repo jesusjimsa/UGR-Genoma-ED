@@ -13,7 +13,7 @@
 
 using namespace std;
 
-mutacion::mutacion(){
+Mutacion::Mutacion(){
 	chr = "1";
 	pos = 1;
 }
@@ -21,7 +21,7 @@ mutacion::mutacion(){
 /**
  Suponemos que la mutación que nos pasan tiene bien los valores, es decir pos>1
 */
-mutacion::mutacion(const mutacion& m){
+Mutacion::Mutacion(const Mutacion& m){
 	ID = m.getID();
 	chr = m.getChr();
 	pos = m.getPos();
@@ -34,7 +34,7 @@ mutacion::mutacion(const mutacion& m){
 }
 
 //para crear objeto mutacion a partir de la cadena que contiene una línea completa del fichero de entrada
-mutacion::mutacion(const string & str){
+Mutacion::Mutacion(const string & str){
 	bool extras = false;
 	unsigned int k = 0;
 	int j = 0;
@@ -282,30 +282,30 @@ mutacion::mutacion(const string & str){
 		int iteraciones = 0;
 
 		for(k = 0; k < auxNombre.size(); k++){
-			enfermedad auxEnf;
+			Enfermedad auxEnf;
 			
 			if(numero_CLNDSDB == 1 && numero_ID == 1){
-				auxEnf = enfermedad(auxNombre[k], auxID[0], auxDB[0]);
+				auxEnf = Enfermedad(auxNombre[k], auxID[0], auxDB[0]);
 			}
 			else{
 				if(numero_CLNDSDB == 1 && numero_ID != 1){
-					auxEnf = enfermedad(auxNombre[k], auxID[k], auxDB[0]);
+					auxEnf = Enfermedad(auxNombre[k], auxID[k], auxDB[0]);
 				}
 				else{
 					if(numero_CLNDSDB != 1 && numero_ID == 1){
-						auxEnf = enfermedad(auxNombre[k], auxID[0], auxDB[k]);
+						auxEnf = Enfermedad(auxNombre[k], auxID[0], auxDB[k]);
 					}
 					else{
 						if(numero_CLNDSDB != 1 && numero_ID != 1 && numero_enf == 2){
-							auxEnf = enfermedad(auxNombre[k], auxID[k], auxDB[k]);
+							auxEnf = Enfermedad(auxNombre[k], auxID[k], auxDB[k]);
 						}
 						else{
 							if(numero_CLNDSDB == 3 && numero_ID == 3 && numero_enf == 5){
 								if(iteraciones < 3){
-									auxEnf = enfermedad(auxNombre[k], auxID[k], auxDB[k]);
+									auxEnf = Enfermedad(auxNombre[k], auxID[k], auxDB[k]);
 								}
 								else{
-									auxEnf = enfermedad(auxNombre[k], auxID[2], auxDB[2]);
+									auxEnf = Enfermedad(auxNombre[k], auxID[2], auxDB[2]);
 								}
 							}
 						}
@@ -359,23 +359,23 @@ mutacion::mutacion(const string & str){
 
 //Métodos consultores
 
-void mutacion::setID(const string & id){
+void Mutacion::setID(const string & id){
 	ID = id;
 }
 
-void mutacion::setChr(const string & chr){
+void Mutacion::setChr(const string & chr){
 	if((stoi(chr) >= 1 && stoi(chr) <= 22) || (this -> chr).compare("X") == 0 || (this -> chr).compare("Y") == 0 || (this -> chr).compare("MT") == 0){
 		(this -> chr) = chr;
 	}
 }
 
-void mutacion::setPos(const unsigned int & pos){
+void Mutacion::setPos(const unsigned int & pos){
 	if (pos > 0){
 		(this -> pos) = pos;
 	}
 }
 
-void mutacion::setRef_alt(const vector<string> & ref_alt){
+void Mutacion::setRef_alt(const vector<string> & ref_alt){
 	(this -> ref_alt).clear();
 
 	for (unsigned int i = 0; i < ref_alt.size(); i++){
@@ -383,7 +383,7 @@ void mutacion::setRef_alt(const vector<string> & ref_alt){
 	}
 }
 
-void mutacion::setGenes (const vector<string> & genes){
+void Mutacion::setGenes (const vector<string> & genes){
 	(this -> genes).clear();
 
 	for (unsigned int i = 0; i < genes.size(); i++){
@@ -391,11 +391,11 @@ void mutacion::setGenes (const vector<string> & genes){
 	}
 }
 
-void mutacion::setCommon (const bool & common){
+void Mutacion::setCommon (const bool & common){
 	this -> common = common;
 }
 
-void mutacion::setCaf (const vector<float> & caf){
+void Mutacion::setCaf (const vector<float> & caf){
 	(this -> caf).clear();
 
 	for (unsigned int i = 0; i < caf.size(); i++){
@@ -403,7 +403,7 @@ void mutacion::setCaf (const vector<float> & caf){
 	}
 }
 
-void mutacion::setEnfermedades (const vector<enfermedad> & enfermedades){
+void Mutacion::setEnfermedades (const vector<Enfermedad> & enfermedades){
 	(this -> enfermedades).clear();
 
 	for(unsigned int i = 0; i < enfermedades.size(); i++){
@@ -411,52 +411,52 @@ void mutacion::setEnfermedades (const vector<enfermedad> & enfermedades){
 	}
 }
 
-void mutacion::setClnsig (const vector<int> & clnsig){
+void Mutacion::setClnsig (const vector<int> & clnsig){
 	for(unsigned int i = 0; i < clnsig.size(); i++){
 		this -> clnsig.push_back(clnsig[i]);
 	}
 }
 
-string mutacion::getID() const{
+string Mutacion::getID() const{
 	return ID;
 }
 
-string mutacion::getChr() const{
+string Mutacion::getChr() const{
 	return chr;
 }
 
-unsigned int mutacion::getPos() const{
+unsigned int Mutacion::getPos() const{
 	return pos;
 }
 
-const vector<string> & mutacion::getRef_alt () const{
+const vector<string> & Mutacion::getRef_alt () const{
 	return ref_alt;
 }
 
-const vector<string> & mutacion::getGenes() const{
+const vector<string> & Mutacion::getGenes() const{
 	return genes;
 }
 
-bool mutacion::getCommon () const{
+bool Mutacion::getCommon () const{
 	return common;
 }
 
 
-const vector<float> & mutacion::getCaf () const{
+const vector<float> & Mutacion::getCaf () const{
 	return caf;
 }
 
-const vector<enfermedad> & mutacion::getEnfermedades () const{
+const vector<Enfermedad> & Mutacion::getEnfermedades () const{
 	return enfermedades;
 }
 
-const vector<int> & mutacion::getClnsig () const{
+const vector<int> & Mutacion::getClnsig () const{
 	return clnsig;
 }
 
 //Sobrecarga de operadores
 
-mutacion & mutacion::operator = (const mutacion & m){
+Mutacion & Mutacion::operator = (const Mutacion & m){
 	if (this != &m){
 		setID(m.getID());
 		setChr(m.getChr());
@@ -472,7 +472,7 @@ mutacion & mutacion::operator = (const mutacion & m){
 	return *this;
 }
 
-bool mutacion::operator == (const mutacion & m) const{
+bool Mutacion::operator == (const Mutacion & m) const{
 	bool iguales = false;
 	if(this != &m){
 		if(m.ID.size() == ID.size() &&
@@ -495,7 +495,7 @@ bool mutacion::operator == (const mutacion & m) const{
 	return iguales;
 }
 
-bool mutacion::operator < (const mutacion & m) const{
+bool Mutacion::operator < (const Mutacion & m) const{
 	bool menor = false;
 
 	if(this != &m){
@@ -511,7 +511,7 @@ bool mutacion::operator < (const mutacion & m) const{
 
 //Métodos auxiliares
 
-string mutacion::imprime_Ref() const{
+string Mutacion::imprime_Ref() const{
 	string hola;
 
 	for (unsigned int i = 0; i < ref_alt.size(); i++){
@@ -521,7 +521,7 @@ string mutacion::imprime_Ref() const{
 	return hola;
 }
 
-string mutacion::imprime_Genes() const{
+string Mutacion::imprime_Genes() const{
 	string hola;
 
 	for (unsigned int i = 0; i < genes.size(); i++){
@@ -531,7 +531,7 @@ string mutacion::imprime_Genes() const{
 	return hola;
 }
 
-string mutacion::imprime_Caf() const{
+string Mutacion::imprime_Caf() const{
 	string hola;
 
 	for (unsigned int i = 0; i < genes.size(); i++){
@@ -541,7 +541,7 @@ string mutacion::imprime_Caf() const{
 	return hola;
 }
 
-string mutacion::imprime_Enfermedades() const{
+string Mutacion::imprime_Enfermedades() const{
 	string hola;
 
 	for(unsigned int i = 0; i < enfermedades.size(); i++){
@@ -551,7 +551,7 @@ string mutacion::imprime_Enfermedades() const{
 	return hola;
 }
 
-ostream& operator<< ( ostream& os, const mutacion& m) {
+ostream& operator<< ( ostream& os, const Mutacion& m) {
 	os << m.getID() << "\t" << m.getChr() << "\t" << m.getPos() << "\t" << m.imprime_Ref() << "\t" << m.imprime_Genes()
 	<< "\t" << m.getCommon() << "\t" << m.imprime_Caf() << "\t" << m.imprime_Enfermedades() << "\t" << endl;
 

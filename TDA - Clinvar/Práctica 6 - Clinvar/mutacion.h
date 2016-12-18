@@ -24,7 +24,7 @@ using namespace std;
  */
 
 
-class mutacion {
+class Mutacion {
 private:
 	string ID;
 	string chr;
@@ -33,7 +33,7 @@ private:
 	vector<string> genes;
 	bool common;
 	vector<float> caf;
-	vector<enfermedad> enfermedades;
+	vector<Enfermedad> enfermedades;
 	vector<int> clnsig;
 	
 public:
@@ -41,21 +41,21 @@ public:
 	/**
 	 @brief Inicia una mutacion vacía.
 	 */
-	mutacion();
+	Mutacion();
 	/**
 	 @brief Crea una mutación a partir de otra.
 	 @param m 	mutación a copiar
 	 
 	 Copia los valores de la mutación pasada como argumento y crea una nueva a partir de ellos.
 	 */
-	mutacion(const mutacion& m);
+	Mutacion(const Mutacion& m);
 	/**
 	 @brief Crea una mutación a partir de un string.
 	 @param str 	cadena string con los datos miembro de la clase
 	 
 	 Se le pasa un string como argumento y se recorre este guardando los correspondientes datos miembro.
 	 */
-	mutacion(const string & str);   //para crear objeto mutacion a partir de la cadena que contiene una línea completa del fichero de entrada
+	Mutacion(const string & str);   //para crear objeto mutacion a partir de la cadena que contiene una línea completa del fichero de entrada
 	/**
 	 @brief Cambia el valor de ID
 	 @param id	id de la mutación
@@ -95,7 +95,7 @@ public:
 	 @brief Cambia el valor del vector de enfermedades
 	 @param enfermedades	nuevo vector con enfermedades
 	 */
-	void setEnfermedades (const vector<enfermedad> & enfermedades);
+	void setEnfermedades (const vector<Enfermedad> & enfermedades);
 	/**
 	 @brief Cambia la relevancia clínica.
 	 @param clnsig	nuevo vector de enteros
@@ -141,7 +141,7 @@ public:
 	 @brief Devuelve el vector de las enfermedades.
 	 @returns enfermedad	vector de las enfermedades
 	 */
-	const vector<enfermedad> & getEnfermedades () const;
+	const vector<Enfermedad> & getEnfermedades () const;
 	/**
 	 @brief Devuelve el vector de enteros que conforman la relevancia clínica.
 	 @returns clnsig	vector de enteros con la relevancia clínica.
@@ -174,19 +174,19 @@ public:
 	 @param m	mutación a la que se iguala
 	 @returns *this
 	 */
-	mutacion & operator=(const mutacion & m);
+	Mutacion & operator=(const Mutacion & m);
 	/**
 	 @brief Sobrecarga el operador == para compararlo con una mutación
 	 @param m	mutación a comparar
 	 @returns iguales
 	 */
-	bool operator==(const mutacion & m) const;
+	bool operator==(const Mutacion & m) const;
 	/**
 	 @brief ESobrecarga el operador < para comparar una mutación
 	 @param m	mutación a comparar
 	 @returns menor
 	 */
-	bool operator<(const mutacion & m) const;      //El orden viene determinado por Chr y pos. El primer criterio es el número de cromosoma. El orden para el número de cromosoma se rige por "1"<"2"<"3"<...<"22"<"X"<"Y"<"MT". Dos mutaciones del mismo cromosoma deben ordenarse según su posición, de menor posición a mayor (orden natural de enteros).
+	bool operator<(const Mutacion & m) const;      //El orden viene determinado por Chr y pos. El primer criterio es el número de cromosoma. El orden para el número de cromosoma se rige por "1"<"2"<"3"<...<"22"<"X"<"Y"<"MT". Dos mutaciones del mismo cromosoma deben ordenarse según su posición, de menor posición a mayor (orden natural de enteros).
 	
 };
 
@@ -196,7 +196,7 @@ public:
  @param m	mutación a imprimir
  @returns os	flujo de impresión
  */
-ostream& operator<< ( ostream& os, const mutacion& m);   //Imprimir TODOS los campos del objeto mutación.
+ostream& operator<< ( ostream& os, const Mutacion& m);   //Imprimir TODOS los campos del objeto mutación.
 
 
 
