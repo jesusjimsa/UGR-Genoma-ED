@@ -31,10 +31,14 @@ private:
 	map<IDgen, list< set<Mutacion>::iterator> > gen_map;
 	map<IDenf,Enfermedad> EnfDB;
 	multimap<IDenf, set<Mutacion>::iterator> IDenf_mmap;
+	
+	//friend class iterator;
+	//friend class gen_iterator;
+	//friend class ProbMutaciones;
 public:
-	/*
+	/**
 	 @brief iterador sobre mutaciones en orden creciente de cromosoma/posicion
-	 */
+	*/
 	class iterator {
 	private:
 		set<Mutacion>::iterator it;
@@ -42,35 +46,43 @@ public:
 		const Mutacion & operator*(); //const - no se puede modificar la mutacion y alterar el orden del set
 	};
 	
-	/* @brief iterador sobre enfermedades
-	 */
+	/**
+	 @brief iterador sobre enfermedades
+	*/
 	// Nos vale utilizar el iterador del map
 	typedef map<IDenf, Enfermedad>::iterator enfermedad_iterator;
 	
-	/*
+	/**
 	 @brief iterador sobre mutaciones considerando el orden creciente del ID del gen
 	 */
 	class gen_iterator {
 	public:
-		const Mutacion & operator*(); //const - no se puede modificar la mutacion y alterar el orden delset
+		const Mutacion & operator*(); //const - no se puede modificar la mutacion y alterar el orden del set
 	private:
 		map<IDgen, list< set<Mutacion>::iterator> > >::iterator itmap;
 		list< set<Mutacion>::iterator > >::iterator itlist;
 		Clinvar *ptrclinvar;
 	};
 	
+	
+	/**
+	 @brief Lee los elementos de un fichero
+	 @param nombreDB Nombre del fichero
+	 
+	 Se encarga de leer los elementos de un fichero dado por el argumento nombreDB, e insertar toda la
+	 información en ClinVar.
+	*/
 	void load (string nombreDB);
 	void insert (const Mutacion & x);
 	bool erase (IDmut ID);
 	
-	iterator find_Mut (IDmut ID);
+	iterator find_Mut(IDmut ID);
 	enfermedad_iterator find_Enf(IDenf ID);
 	
 	vector<Enfermedad> getEnfermedades(Mutacion & mut);
 	list<IDenf> getEnfermedades(string keyword);
 	set<IDmut> getMutacionesEnf (IDenf ID);
 	set<IDmut> getMutacionesGen (IDgen ID);
-	
 	set<Mutacion, ProbMutaciones> topKMutaciones (int k, string keyword);
 	
 	/* Métodos relacionados con los iteradores */
@@ -78,19 +90,19 @@ public:
 	iterator end();
 	iterator lower_bound(string cromosoma, unsigned int posicion);
 	iterator upper_bound(string cromosoma, unsigned int posicion);
+	
 	enfermedad_iterator ebegin();
 	enfermedad_iterator eend();
+	
 	gen_iterator gbegin();
 	gen_iterator gend();
 };
 
 //Functor
 class ProbMutaciones{
-private:
-	bool hola;
 public:
-	ProbMutaciones(){
-		
+	bool operator()(Mutacion a, Mutacion b){
+		return a < b;
 	}
 };
 
