@@ -74,6 +74,17 @@ public:
 	*/
 	void load (string nombreDB);
 	void insert (const Mutacion & x);
+	
+	/**
+	 @brief Borra una mutación de la base de datos dado su ID.
+	 @param ID ID de la mutación
+	 @return Devuelve true si la ha conseguido borrar, false en el caso contrario
+	 
+	 No sólo borra la mutación del repositorio principal de datos sino que además se encarga de borrar toda referencia
+	 a dicho elemento dentro de él.
+	 En el caso de que una enfermedad estuviese asociada únicamente a la mutación que está siendo eliminada, esta
+	 enfermedada también debe eliminarse de ClinVar.
+	*/
 	bool erase (IDmut ID);
 	
 	iterator find_Mut(IDmut ID);

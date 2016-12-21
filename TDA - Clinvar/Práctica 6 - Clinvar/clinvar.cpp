@@ -57,13 +57,11 @@ void Clinvar::load (string nombreDB){
 				gen_map[mut.getGenes()[i]].push_back(it);	//Este mapa contiene una lista
 			}
 			
-			//Mapa con la lista de mutaciones, el ID se asocia
 			for(int i = 0; i < mut.getEnfermedades().size(); i++){
+				//Mapa con la lista de mutaciones, el ID se asocia
 				EnfDB[mut.getEnfermedades().at(i).getID()] = mut.getEnfermedades().at(i);
-			}
-			
-			//Cada enfermedad se asocia a una mutación
-			for(int i = 0; i < mut.getEnfermedades().size(); i++){
+				
+				//Cada enfermedad se asocia a una mutación
 				IDenf_mmap.insert(pair<IDenf, set<Mutacion>::iterator>(mut.getEnfermedades().at(i).getID(), it));
 			}
 			
@@ -80,3 +78,56 @@ void Clinvar::load (string nombreDB){
 void Clinvar::insert (const Mutacion & x){
 	
 }
+
+bool Clinvar::erase (IDmut ID){
+	bool borrado = false;
+	set<Mutacion>::iterator it = IDm_map[ID];
+	vector<Enfermedad> fuera = (*it).getEnfermedades();
+	
+	mutDB.erase(it);
+	IDm_map.erase(ID);
+	
+	for(int i = 0; i < (*it).getEnfermedades().size(); i++){
+		IDenf_mmap.erase((*it).getEnfermedades().at(i).getID());
+	}
+	
+	//No es así
+	//Preguntar cómo saber si hay elementos repetidos (quizá con find)
+	if ((*it).getEnfermedades().size() == 1){
+		EnfDB.erase((*it).getEnfermedades().at(0).getID());
+	}
+	
+	return borrado;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

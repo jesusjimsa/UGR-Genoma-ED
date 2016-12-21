@@ -37,11 +37,11 @@ private:
 	vector<int> clnsig;
 	
 public:
-	
 	/**
 	 @brief Inicia una mutacion vacía.
 	 */
 	Mutacion();
+	
 	/**
 	 @brief Crea una mutación a partir de otra.
 	 @param m 	mutación a copiar
@@ -49,6 +49,7 @@ public:
 	 Copia los valores de la mutación pasada como argumento y crea una nueva a partir de ellos.
 	 */
 	Mutacion(const Mutacion& m);
+	
 	/**
 	 @brief Crea una mutación a partir de un string.
 	 @param str 	cadena string con los datos miembro de la clase
@@ -56,46 +57,55 @@ public:
 	 Se le pasa un string como argumento y se recorre este guardando los correspondientes datos miembro.
 	 */
 	Mutacion(const string & str);   //para crear objeto mutacion a partir de la cadena que contiene una línea completa del fichero de entrada
+	
 	/**
 	 @brief Cambia el valor de ID
 	 @param id	id de la mutación
 	 */
 	void setID(const string & id);
+	
 	/**
 	 @brief Cambia el valor del cromosoma
 	 @param chr	nuevo cromosoma
 	 */
 	void setChr(const string & chr);
+	
 	/**
 	 @brief Cambia el valor de la posición
 	 @param pos	posicion nueva
 	 */
 	void setPos(const unsigned int & pos);
+	
 	/**
 	 @brief Cambia el valor del genoma básico
 	 @param ref_alt	vector de string que contiene el genoma tipo
 	 */
 	void setRef_alt(const vector<string> & ref_alt);
+	
 	/**
 	 @brief Cambia el valor de los genes
 	 @param genes	vector con los genes
 	 */
 	void setGenes (const vector<string> & genes);
+	
 	/**
 	 @brief Cambia el valor del bool de si es común o no la mutación
 	 @param common	nuevo bool
 	 */
 	void setCommon (const bool & common);
+	
 	/**
 	 @brief Cambia el valor de la frecuencia de cada base
 	 @param caf	nuevo vector con frecuencias
 	 */
 	void setCaf (const vector<float> & caf);
+	
 	/**
 	 @brief Cambia el valor del vector de enfermedades
 	 @param enfermedades	nuevo vector con enfermedades
 	 */
 	void setEnfermedades (const vector<Enfermedad> & enfermedades);
+	
 	/**
 	 @brief Cambia la relevancia clínica.
 	 @param clnsig	nuevo vector de enteros
@@ -107,41 +117,49 @@ public:
 	 @returns ID	valor del id de la mutación
 	 */
 	string getID( ) const;
+	
 	/**
 	 @brief Devuelve el identificador del cromosoma
 	 @returns chr	identificador del cromosoma
 	 */
 	string getChr( ) const;
+	
 	/**
 	 @brief Devuelve la posición del cromosoma.
 	 @returns pos	posición del cromosoma
 	 */
 	unsigned int getPos( ) const;
+	
 	/**
 	 @brief Devuelve el vector del genoma básico
 	 @returns ref_alt	vector del genoma básico
 	 */
 	const vector<string> & getRef_alt () const;
+	
 	/**
 	 @brief Devuelve el vector de los genes.
 	 @returns genes	vector de los genes
 	 */
 	const vector<string> & getGenes () const;
+	
 	/**
 	 @brief Devuelve si una mutación es común o no.
 	 @returns common	bool de si es común o no
 	 */
 	bool getCommon () const;
+	
 	/**
 	 @brief Devuelve el vector de las frecuencias de cada base.
 	 @returns caf	vector de las frecuencias
 	 */
 	const vector<float> & getCaf () const;
+	
 	/**
 	 @brief Devuelve el vector de las enfermedades.
 	 @returns enfermedad	vector de las enfermedades
 	 */
 	const vector<Enfermedad> & getEnfermedades () const;
+	
 	/**
 	 @brief Devuelve el vector de enteros que conforman la relevancia clínica.
 	 @returns clnsig	vector de enteros con la relevancia clínica.
@@ -153,16 +171,19 @@ public:
 	 @returns hola	string con la relevancia clínica.
 	 */
 	string imprime_Ref() const;	//Añado este método para imprimir el vector ref_alt
+	
 	/**
 	 @brief Devuelve la referencia de los genes convertida en el string hola
 	 @returns hola	string con la referencia
 	 */
 	string imprime_Genes() const;	//Lo mismo para genes
+	
 	/**
 	 @brief Devuelve la frecuencia de cada base.
 	 @returns hola	string con la frecuencia
 	 */
 	string imprime_Caf() const;	//eequilicuá
+	
 	/**
 	 @brief Devuelve la las enfermedades asociadas
 	 @returns hola	string con las enfermedades
@@ -175,12 +196,14 @@ public:
 	 @returns *this
 	 */
 	Mutacion & operator=(const Mutacion & m);
+	
 	/**
 	 @brief Sobrecarga el operador == para compararlo con una mutación
 	 @param m	mutación a comparar
 	 @returns iguales
 	 */
 	bool operator==(const Mutacion & m) const;
+	
 	/**
 	 @brief ESobrecarga el operador < para comparar una mutación
 	 @param m	mutación a comparar
@@ -197,7 +220,5 @@ public:
  @returns os	flujo de impresión
  */
 ostream& operator<< ( ostream& os, const Mutacion& m);   //Imprimir TODOS los campos del objeto mutación.
-
-
 
 #endif
