@@ -31,10 +31,6 @@ private:
 	map<IDgen, list< set<Mutacion>::iterator> > gen_map;
 	map<IDenf,Enfermedad> EnfDB;
 	multimap<IDenf, set<Mutacion>::iterator> IDenf_mmap;
-	
-	//friend class iterator;
-	//friend class gen_iterator;
-	//friend class ProbMutaciones;
 public:
 	/**
 	 @brief iterador sobre mutaciones en orden creciente de cromosoma/posicion
@@ -165,6 +161,12 @@ public:
 	
 	gen_iterator gbegin();
 	gen_iterator gend();
+	
+	//Clases amigas
+private:
+	friend class iterator;
+	friend class gen_iterator;
+	friend class ProbMutaciones;
 };
 
 
