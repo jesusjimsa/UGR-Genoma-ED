@@ -26,11 +26,11 @@ typedef string IDenf;
 
 class Clinvar{
 private:
-	set<Mutacion> mutDB;
-	unordered_map<IDmut,set<Mutacion>::iterator> IDm_map;
-	map<IDgen, list< set<Mutacion>::iterator> > gen_map;
-	map<IDenf,Enfermedad> EnfDB;
-	multimap<IDenf, set<Mutacion>::iterator> IDenf_mmap;
+	set<Mutacion> mutDB;	//Base de datos que contiene toda la información asociada a una mutacion
+	unordered_map<IDmut, set<Mutacion>::iterator> IDm_map;	// Asocia IDmutacion con mutación
+	map<IDgen, list< set<Mutacion>::iterator> > gen_map;	// Asocia genes con mutaciones
+	map<IDenf, Enfermedad> EnfDB;	// Base de datos de enfermedades
+	multimap<IDenf, set<Mutacion>::iterator> IDenf_mmap;	// Asocia enfermedad con mutaciones
 public:
 	/**
 	 @brief iterador sobre mutaciones en orden creciente de cromosoma/posicion
@@ -119,8 +119,7 @@ public:
 	/**
 	 @brief iterador sobre enfermedades
 	*/
-	// Nos vale utilizar el iterador del map
-	typedef map<IDenf, Enfermedad>::iterator enfermedad_iterator;
+	typedef map<IDenf, Enfermedad>::iterator enfermedad_iterator;	// Nos vale utilizar el iterador del map
 	
 	/**
 	 @brief iterador sobre mutaciones considerando el orden creciente del ID del gen
@@ -180,10 +179,45 @@ public:
 	 Busca la mutación con identificador ID dentro de ClinVar, si no lo encuentra devuelve end()
 	*/
 	iterator find_Mut(IDmut ID);
+	
+	/**
+	 @brief Busca una enfermedad
+	 @param ID ID de la enfermedad
+	 @return Iterador a la enfermedad
+	 
+	 Busca la enfermedad con identificador ID dentro de ClinVar, si no lo encuentra devuelve eend()
+	 */
 	enfermedad_iterator find_Enf(IDenf ID);
 	
+	/**
+	 @brief Consultor de enfermedades
+	 @param mut Mutación a investigar
+	 @return Vector de enfermedades
+	 
+	 Devuelve un vector con todas las enfermedades asociadas a una mutación en la base de
+	 datos clinvar.
+	 */
 	vector<Enfermedad> getEnfermedades(Mutacion & mut);
+	
+	/**
+	 @brief Consultor de identificadores de enfermedad
+	 @param keyword Palabra clave
+	 @return Identificadores de las enfermedades que contienen la palabra
+	 
+	 Devuelve una lista de los identificadores de enfermedad que contienen la palabra keyword como
+	 parte del nombre de la enfermedad.
+	 */
 	list<IDenf> getEnfermedades(string keyword);
+	
+	/**
+	 @brief Consultor de mutaciones asociadas a una enfermedad
+	 @param ID ID de una enfermedad
+	 @return conjunto de mutaciones asociadas a una enfermedad
+	 
+	 Devuelve un conjunto ordenado (en orden creciente de IDmut) de todas las mutaciones que se encuentran asociadas
+	 a la enfermedad con identificador ID. Si no tuviese ninguna enfermedad asociada, devuelve el conjunto
+	 vacío.
+	 */
 	set<IDmut> getMutacionesEnf (IDenf ID);
 	set<IDmut> getMutacionesGen (IDgen ID);
 	set<Mutacion, ProbMutaciones> topKMutaciones (int k, string keyword);

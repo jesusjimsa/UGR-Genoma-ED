@@ -132,7 +132,7 @@ bool Clinvar::erase (IDmut ID){
 }
 
 Clinvar::iterator Clinvar::find_Mut(IDmut ID){
-	iterator it = iterator(mutDB.end());
+	iterator it = end();
 	
 	if(IDm_map.count(ID) > 0){	//Compruebo si la mutación existe
 		it = iterator(IDm_map[ID]);
@@ -140,6 +140,46 @@ Clinvar::iterator Clinvar::find_Mut(IDmut ID){
 	
 	return it;
 }
+
+Clinvar::enfermedad_iterator Clinvar::find_Enf(IDenf ID){
+	enfermedad_iterator it = eend();
+	
+	if(EnfDB.count(ID) > 0){	//Compruebo si la enfermedad existe
+		it = EnfDB.find(ID);
+	}
+	
+	return it;
+}
+
+vector<Enfermedad> Clinvar::getEnfermedades(Mutacion & mut){
+	return mut.getEnfermedades();
+}
+
+list<IDenf> Clinvar::getEnfermedades(string keyword){
+	list<IDenf> devolver;
+	
+	for(auto it = EnfDB.begin(); it != EnfDB.end(); ++it){
+		if((it->second).nameContains(keyword)){
+			devolver.push_back(it->first);
+		}
+	}
+	
+	return devolver;
+}
+
+set<IDmut> Clinvar::getMutacionesEnf (IDenf ID){
+	set<IDmut> devolver;
+	
+	for(auto it = IDenf_mmap.begin(); it != IDenf_mmap.end(); ++it){
+		if(it->first == ID){
+			devolver.insert((*(it->second)).getID());
+		}
+	}
+	
+	return devolver;
+}
+
+
 
 
 
