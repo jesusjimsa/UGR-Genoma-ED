@@ -85,45 +85,48 @@ bool Clinvar::erase (IDmut ID){
 	set<Mutacion>::iterator it = IDm_map[ID];
 	vector<Enfermedad> fuera = (*it).getEnfermedades();
 	
-	for(int i = 0; i < 20; i++){
-		mutaciones_asociadas[i] = 0;
-	}
-	
-	for(int i = 0; i < fuera.size(); i++){
+	if(IDm_map.count(ID) > 0){
+		for(int i = 0; i < 20; i++){
+			mutaciones_asociadas[i] = 0;
+		}
+		
+		for(int i = 0; i < fuera.size(); i++){
+			for(auto ite = IDenf_mmap.begin(); ite != IDenf_mmap.end(); ++ite){
+				if(ite->first == fuera[i].getID()){
+					mutaciones_asociadas[i]++;
+				}
+			}
+		}
+		
 		for(auto ite = IDenf_mmap.begin(); ite != IDenf_mmap.end(); ++ite){
-			if(ite->first == fuera[i].getID()){
-				mutaciones_asociadas[i]++;
+			if(ite->second == IDm_map[ID]){
+				ite = IDenf_mmap.erase(ite);
+				/*
+				 Como cada entrada del multimapa tendrá un iterador a una mutación, solo se borrará
+				 una enfermedad, aunque haya varias con el mismo ID
+				*/
 			}
 		}
-	}
-	
-	for(auto ite = IDenf_mmap.begin(); ite != IDenf_mmap.end(); ++ite){
-		if(ite->second == IDm_map[ID]){
-			ite = IDenf_mmap.erase(ite);
-			/*
-			 Como cada entrada del multimapa tendrá un iterador a una mutación, solo se borrará
-			 una enfermedad, aunque haya varias con el mismo ID
-			*/
-		}
-	}
-	
-	for(int i = 0; i < 20; i++){
-		if (mutaciones_asociadas[i] == 1){
-			EnfDB.erase((*it).getEnfermedades().at(i).getID());
-		}
-	}
-	
-	for(auto ite = gen_map.begin(); ite != gen_map.end(); ++ite){
-		for(auto list_ite = gen_map[ite->first].begin(); list_ite != gen_map[ite->first].end(); ++list_ite){
-			if((*list_ite) == IDm_map[ID]){
-				list_ite = gen_map[ite->first].erase(list_ite);
+		
+		for(int i = 0; i < 20; i++){
+			if (mutaciones_asociadas[i] == 1){
+				EnfDB.erase((*it).getEnfermedades().at(i).getID());
 			}
 		}
+		
+		for(auto ite = gen_map.begin(); ite != gen_map.end(); ++ite){
+			for(auto list_ite = gen_map[ite->first].begin(); list_ite != gen_map[ite->first].end(); ++list_ite){
+				if((*list_ite) == IDm_map[ID]){
+					list_ite = gen_map[ite->first].erase(list_ite);
+				}
+			}
+		}
+		
+		mutDB.erase(it);
+		IDm_map.erase(ID);
+		
+		borrado = true;
 	}
-	
-	mutDB.erase(it);
-	IDm_map.erase(ID);
-	
 	
 	return borrado;
 }
