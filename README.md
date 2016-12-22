@@ -5,4 +5,4 @@ Realizadas con el profesor Carlos Cano Gutierrez.
 ##Guiones de las prácticas  
 [Guión de la práctica TDA Clinvar](https://www.dropbox.com/s/x2mtkdy7i6h08bc/documentacion_v1.pdf?dl=0)
   
-[[http://i.imgur.com/RWyGGgS.png]]
+[[http://i.imgur.com/RWyGGgS.png|alt=Clinvar]]
