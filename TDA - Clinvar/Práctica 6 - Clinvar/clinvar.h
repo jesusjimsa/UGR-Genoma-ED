@@ -43,17 +43,42 @@ public:
 	private:
 		set<Mutacion>::iterator it;
 	public:
-		iterator();	//Constructor por defecto
-		iterator(set<Mutacion>::iterator ite);
-		const Mutacion & operator*(); //const - no se puede modificar la mutacion y alterar el orden del set
-		iterator & operator=(iterator otro);	//Operador de asignación
-	};
-	
-	//Functor
-	class ProbMutaciones{
-	public:
-		bool operator()(Mutacion a, Mutacion b){
-			return a < b;
+		/**
+		 @brief Constructor por defecto
+		*/
+		iterator(){
+		
+		}
+		
+		/**
+		 @brief Constructor a partir de un iterador de set
+		 @param ite Iterador de set<Mutacion>
+		 
+		 Construye un iterator a partir de un iterador de set<Mutacion>
+		*/
+		iterator(set<Mutacion>::iterator ite){
+			it = ite;
+		}
+		
+		/**
+		 @brief Operador de acceso
+		 @return Mutación de la posición que indica it
+		*/
+		const Mutacion & operator*(){ //const - no se puede modificar la mutacion y alterar el orden del set
+			return (*it);
+		}
+		
+		/**
+		 @brief Operador de asignación
+		 @param otro Otro objeto de la clase iterator
+		 @return El iterador asignado
+		 */
+		iterator & operator=(iterator otro){	//Operador de asignación
+			if(this != &otro){
+				it = otro.it;
+			}
+			
+			return *this;
 		}
 	};
 	
@@ -75,6 +100,13 @@ public:
 		Clinvar *ptrclinvar;
 	};
 	
+	//Functor
+	class ProbMutaciones{
+	public:
+		bool operator()(Mutacion a, Mutacion b){
+			return a < b;
+		}
+	};
 	
 	/**
 	 @brief Lee los elementos de un fichero
@@ -109,7 +141,7 @@ public:
 	/**
 	 @brief Busca una mutación
 	 @param ID ID de la mutación
-	 @return it Un iterador a la mutación
+	 @return Un iterador a la mutación
 	 
 	 Busca la mutación con identificador ID dentro de ClinVar, si no lo encuentra devuelve end()
 	*/
