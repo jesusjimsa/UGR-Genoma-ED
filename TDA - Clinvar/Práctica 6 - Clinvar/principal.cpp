@@ -18,50 +18,6 @@
 using namespace std;
 using namespace std::chrono;
 
-bool load(vector<Mutacion> &  vm, const string & s) {
-	ifstream fe;
-	string cadena;
-	
-	cout << "Abrimos "<< s << endl;
-	
-	fe.open(s.c_str(), ifstream::in);
-	
-	if(fe.fail()){
-		cerr << "Error al abrir el fichero " << s << endl;
-	}
-	else{
-		//leo la cabecera del fichero (líneas que comienzan con #)
-		do{
-			getline(fe,cadena,'\n');
-		}while(cadena.find("#") == 0 && !fe.eof());
-		
-		//leo la tabla de mutaciones, una línea cada vez
-		int i = 1;
-		while (!fe.eof()){
-			cout << "leo:: " << cadena << endl;
-			cout << "\nLineas leidas: " << i << endl;
-			
-			i++;
-			
-			// Invoco el constructor de mutación que recibe una cadena completa, la parsea y crea la mutación.
-			Mutacion mut = Mutacion(cadena);
-			
-			// Insertar mutación en el vector
-			vm.push_back(mut);
-			getline(fe,cadena,'\n');
-		}
-		fe.close();
-		
-		return true;
-	} // else
-	
-	fe.close();
-	
-	return false;
-}
-
-
-
 int main(int argc, char *argv[]){
 	vector<Mutacion> vectorSNPs;
 	string query_str;
@@ -73,7 +29,7 @@ int main(int argc, char *argv[]){
 	}
 	
 	//Cargar las mutaciones en vectorSNPs
-	load(vectorSNPs, "clinvar_20160831.vcf");
+	//load(vectorSNPs, "clinvar_20160831.vcf");
 	
 	//Imprimir número de elementos almacenados en vectorSNPs (130867 mutaciones totales)
 	cout << "Lectura del fichero finalizada. Mutaciones cargadas: " << vectorSNPs.size() << endl;

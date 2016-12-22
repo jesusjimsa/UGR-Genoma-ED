@@ -73,6 +73,15 @@ public:
 	 información en ClinVar.
 	*/
 	void load (string nombreDB);
+	
+	
+	/**
+	 @brief Inserta una nueva mutación
+	 @param x Mutación a insertar
+	 
+	 Este método se encarga de insertar una nueva mutación en ClinVar. Esto implica actualizar todas las estructuras
+	 necesarias para mantener la coherencia interna de la representación propuesta.
+	 */
 	void insert (const Mutacion & x);
 	
 	/**

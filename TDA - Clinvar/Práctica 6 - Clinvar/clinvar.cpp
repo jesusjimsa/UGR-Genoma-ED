@@ -24,8 +24,6 @@ using namespace std;
 void Clinvar::load (string nombreDB){
 	ifstream archivo;
 	string cadena;
-	set<Mutacion>::iterator it = mutDB.begin();
-	list< set<Mutacion>::iterator > listilla;
 	
 	archivo.open(nombreDB);
 	
@@ -49,23 +47,8 @@ void Clinvar::load (string nombreDB){
 			// Invoco el constructor de mutación que recibe una cadena completa, la parsea y crea la mutación.
 			Mutacion mut = Mutacion(cadena);
 			
-			// Insertar mutación en el vector
-			mutDB.insert(mut);
-			IDm_map[mut.getID()] = it;
+			insert(mut);	//Inserto la posición en Clinvar
 			
-			for(int i = 0; i < mut.getGenes().size(); i++){
-				gen_map[mut.getGenes()[i]].push_back(it);	//Este mapa contiene una lista
-			}
-			
-			for(int i = 0; i < mut.getEnfermedades().size(); i++){
-				//Mapa con la lista de mutaciones, el ID se asocia
-				EnfDB[mut.getEnfermedades().at(i).getID()] = mut.getEnfermedades().at(i);
-				
-				//Cada enfermedad se asocia a una mutación
-				IDenf_mmap.insert(pair<IDenf, set<Mutacion>::iterator>(mut.getEnfermedades().at(i).getID(), it));
-			}
-			
-			++it;
 			getline(archivo,cadena,'\n');
 		}
 		archivo.close();
@@ -76,26 +59,71 @@ void Clinvar::load (string nombreDB){
 }
 
 void Clinvar::insert (const Mutacion & x){
+	set<Mutacion>::iterator it;
 	
+	mutDB.insert(x);
+	it = mutDB.find(x);		//Guardo la posición en la que se ha insertado
+	
+	IDm_map[x.getID()] = it;
+	
+	for(int i = 0; i < x.getGenes().size(); i++){
+		gen_map[x.getGenes()[i]].push_back(it);	//Este mapa contiene una lista de iteradores
+	}
+	
+	for(int i = 0; i < x.getEnfermedades().size(); i++){
+		//Mapa con la lista de mutaciones, el ID se asocia
+		EnfDB[x.getEnfermedades().at(i).getID()] = x.getEnfermedades().at(i);
+		
+		//Cada enfermedad se asocia a una mutación
+		IDenf_mmap.insert(pair<IDenf, set<Mutacion>::iterator>(x.getEnfermedades().at(i).getID(), it));
+	}
 }
 
 bool Clinvar::erase (IDmut ID){
 	bool borrado = false;
+	int mutaciones_asociadas[20];	//Suponiendo que haya 20 enfermedades como mucho por mutación
 	set<Mutacion>::iterator it = IDm_map[ID];
 	vector<Enfermedad> fuera = (*it).getEnfermedades();
+	
+	for(int i = 0; i < 20; i++){
+		mutaciones_asociadas[i] = 0;
+	}
+	
+	for(int i = 0; i < fuera.size(); i++){
+		for(auto ite = IDenf_mmap.begin(); ite != IDenf_mmap.end(); ++ite){
+			if(ite->first == fuera[i].getID()){
+				mutaciones_asociadas[i]++;
+			}
+		}
+	}
+	
+	for(auto ite = IDenf_mmap.begin(); ite != IDenf_mmap.end(); ++ite){
+		if(ite->second == IDm_map[ID]){
+			ite = IDenf_mmap.erase(ite);
+			/*
+			 Como cada entrada del multimapa tendrá un iterador a una mutación, solo se borrará
+			 una enfermedad, aunque haya varias con el mismo ID
+			*/
+		}
+	}
+	
+	for(int i = 0; i < 20; i++){
+		if (mutaciones_asociadas[i] == 1){
+			EnfDB.erase((*it).getEnfermedades().at(i).getID());
+		}
+	}
+	
+	for(auto ite = gen_map.begin(); ite != gen_map.end(); ++ite){
+		for(auto list_ite = gen_map[ite->first].begin(); list_ite != gen_map[ite->first].end(); ++list_ite){
+			if((*list_ite) == IDm_map[ID]){
+				list_ite = gen_map[ite->first].erase(list_ite);
+			}
+		}
+	}
 	
 	mutDB.erase(it);
 	IDm_map.erase(ID);
 	
-	for(int i = 0; i < (*it).getEnfermedades().size(); i++){
-		IDenf_mmap.erase((*it).getEnfermedades().at(i).getID());
-	}
-	
-	//No es así
-	//Preguntar cómo saber si hay elementos repetidos (quizá con find)
-	if ((*it).getEnfermedades().size() == 1){
-		EnfDB.erase((*it).getEnfermedades().at(0).getID());
-	}
 	
 	return borrado;
 }
