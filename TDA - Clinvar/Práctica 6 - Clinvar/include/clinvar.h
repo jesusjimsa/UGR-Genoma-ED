@@ -76,6 +76,44 @@ public:
 			
 			return *this;
 		}
+		
+		/**
+		 @brief Operador de incremento
+		 @return Iterador incrementado
+		 */
+		iterator &operator++(){
+			it++;
+			
+			return (*this);
+		}
+		
+		/**
+		 @brief Operador de decremento
+		 @return Operador decrementado
+		 */
+		iterator &operator--(){
+			it--;
+			
+			return (*this);
+		}
+		
+		/**
+		 @brief Operador de comparación
+		 @param otro Otro iterador
+		 @return ture si son iguales, false en caso contrario
+		 */
+		bool operator==(iterator otro){
+			return it == otro.it;
+		}
+		
+		/**
+		 @brief Operador de diferencia
+		 @param otro Otro iterador
+		 @return true si son distintos, falso en caso contrario
+		 */
+		bool operator!=(iterator otro){
+			return it != otro.it;
+		}
 	};
 	
 	/**
