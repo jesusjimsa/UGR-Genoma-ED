@@ -43,7 +43,18 @@ public:
 	private:
 		set<Mutacion>::iterator it;
 	public:
+		iterator();	//Constructor por defecto
+		iterator(set<Mutacion>::iterator ite);
 		const Mutacion & operator*(); //const - no se puede modificar la mutacion y alterar el orden del set
+		iterator & operator=(iterator otro);	//Operador de asignación
+	};
+	
+	//Functor
+	class ProbMutaciones{
+	public:
+		bool operator()(Mutacion a, Mutacion b){
+			return a < b;
+		}
 	};
 	
 	/**
@@ -59,8 +70,8 @@ public:
 	public:
 		const Mutacion & operator*(); //const - no se puede modificar la mutacion y alterar el orden del set
 	private:
-		map<IDgen, list< set<Mutacion>::iterator> > >::iterator itmap;
-		list< set<Mutacion>::iterator > >::iterator itlist;
+		map<IDgen, list< set<Mutacion>::iterator> >::iterator itmap;
+		list< set<Mutacion>::iterator >::iterator itlist;
 		Clinvar *ptrclinvar;
 	};
 	
@@ -73,7 +84,6 @@ public:
 	 información en ClinVar.
 	*/
 	void load (string nombreDB);
-	
 	
 	/**
 	 @brief Inserta una nueva mutación
@@ -96,6 +106,13 @@ public:
 	*/
 	bool erase (IDmut ID);
 	
+	/**
+	 @brief Busca una mutación
+	 @param ID ID de la mutación
+	 @return it Un iterador a la mutación
+	 
+	 Busca la mutación con identificador ID dentro de ClinVar, si no lo encuentra devuelve end()
+	*/
 	iterator find_Mut(IDmut ID);
 	enfermedad_iterator find_Enf(IDenf ID);
 	
@@ -118,12 +135,6 @@ public:
 	gen_iterator gend();
 };
 
-//Functor
-class ProbMutaciones{
-public:
-	bool operator()(Mutacion a, Mutacion b){
-		return a < b;
-	}
-};
+
 
 #endif /* clinvar_h */

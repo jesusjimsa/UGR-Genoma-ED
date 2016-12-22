@@ -85,7 +85,7 @@ bool Clinvar::erase (IDmut ID){
 	set<Mutacion>::iterator it = IDm_map[ID];
 	vector<Enfermedad> fuera = (*it).getEnfermedades();
 	
-	if(IDm_map.count(ID) > 0){
+	if(IDm_map.count(ID) > 0){	//Compruebo si la mutación existe
 		for(int i = 0; i < 20; i++){
 			mutaciones_asociadas[i] = 0;
 		}
@@ -129,6 +129,16 @@ bool Clinvar::erase (IDmut ID){
 	}
 	
 	return borrado;
+}
+
+Clinvar::iterator Clinvar::find_Mut(IDmut ID){
+	iterator it = iterator(mutDB.end());
+	
+	if(IDm_map.count(ID) > 0){	//Compruebo si la mutación existe
+		it = iterator(IDm_map[ID]);
+	}
+	
+	return it;
 }
 
 
