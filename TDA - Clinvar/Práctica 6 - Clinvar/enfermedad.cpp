@@ -13,43 +13,43 @@
 
 using namespace std;
 
-enfermedad::enfermedad(){
+Enfermedad::Enfermedad(){
 	name = "Ninguno";
 	ID = "Ninguno";
 	database = "Ninguno";
 }
 
-enfermedad::enfermedad(const string & name, const string & ID, const string & database){
+Enfermedad::Enfermedad(const string & name, const string & ID, const string & database){
 	this -> name = name;
 	this -> ID = ID;
 	this -> database = database;
 }
 
-void enfermedad::setName(const string & name){
+void Enfermedad::setName(const string & name){
 	this -> name = name;
 }
 
-void enfermedad::setID(const string & ID){
+void Enfermedad::setID(const string & ID){
 	this -> ID = ID;
 }
 
-void enfermedad::setDatabase(const string & database){
+void Enfermedad::setDatabase(const string & database){
 	this -> database = database;
 }
 
-string enfermedad::getName() const{
+string Enfermedad::getName() const{
 	return name;
 }
 
-string  enfermedad::getID() const{
+string  Enfermedad::getID() const{
 	return ID;
 }
 
-string enfermedad::getDatabase() const{
+string Enfermedad::getDatabase() const{
 	return database;
 }
 
-enfermedad & enfermedad::operator = (const enfermedad & e){
+Enfermedad & Enfermedad::operator = (const Enfermedad & e){
 	if (this != &e){
 		this -> ID = e.getID();
 		this -> name = e.getName();
@@ -59,11 +59,11 @@ enfermedad & enfermedad::operator = (const enfermedad & e){
 	return *this;
 }
 
-string enfermedad::toString() const {
+string Enfermedad::toString() const {
 	return this -> name + " : " + this -> ID + "\tDB: " + this -> database + "\n";
 }
 
-bool enfermedad::operator == (const enfermedad & e) const{
+bool Enfermedad::operator == (const Enfermedad & e) const{
 	bool igual = false;
 	
 	if(this != &e){
@@ -77,15 +77,15 @@ bool enfermedad::operator == (const enfermedad & e) const{
 }
 
 
-bool enfermedad::operator != (const enfermedad & e) const{
+bool Enfermedad::operator != (const Enfermedad & e) const{
 	return !(this == &e);
 }
 
-bool enfermedad::operator<(const enfermedad & e) const {
+bool Enfermedad::operator<(const Enfermedad & e) const {
 	return (name < e.getName());
 }
 
-bool enfermedad::nameContains(const string & str) const{
+bool Enfermedad::nameContains(const string & str) const{
 	bool dentro = false;
 	
 	if (str == ""){
@@ -99,7 +99,7 @@ bool enfermedad::nameContains(const string & str) const{
 	return dentro;
 }
 
-string enfermedad::imprime_Enf() const{
+string Enfermedad::imprime_Enf() const{
 	string hola;
 	
 	hola = getName() + " " + getID() + " " + getDatabase();
@@ -107,7 +107,7 @@ string enfermedad::imprime_Enf() const{
 	return hola;
 }
 
-ostream& operator << ( ostream& os, const enfermedad & e){
+ostream& operator << ( ostream& os, const Enfermedad & e){
 	os << e.getName() << " " << e.getID() << "\n" << e.getDatabase() << endl;
 	
 	return os;
