@@ -6,8 +6,8 @@
 //  Copyright © 2016 Jesús Jiménez Sánchez. All rights reserved.
 //
 
-#ifndef clinvar_hpp
-#define clinvar_hpp
+#ifndef clinvar_h
+#define clinvar_h
 
 #include <stdio.h>
 #include <string>
