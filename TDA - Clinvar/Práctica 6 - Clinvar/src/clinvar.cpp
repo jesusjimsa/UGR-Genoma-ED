@@ -224,7 +224,6 @@ set<Mutacion, Clinvar::ProbMutaciones> Clinvar::topKMutaciones (int k, string ke
 		cola_p.pop();
 	}
 	
-	
 	return topk;
 }
 

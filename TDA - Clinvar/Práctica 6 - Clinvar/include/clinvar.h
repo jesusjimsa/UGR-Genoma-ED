@@ -125,12 +125,106 @@ public:
 	 @brief iterador sobre mutaciones considerando el orden creciente del ID del gen
 	 */
 	class gen_iterator {
-	public:
-		const Mutacion & operator*(); //const - no se puede modificar la mutacion y alterar el orden del set
 	private:
 		map<IDgen, list< set<Mutacion>::iterator> >::iterator itmap;
 		list< set<Mutacion>::iterator >::iterator itlist;
-		Clinvar *ptrclinvar;
+		Clinvar *ptrclinvar;	
+	public:
+		/**
+		 @brief Constructor por defecto
+		 */
+		gen_iterator(){
+			
+		}
+		
+		/**
+		 @brief Operador de acceso
+		 @return Mutación de la posición que indica it
+		 */
+		const Mutacion & operator*(){ //const - no se puede modificar la mutacion y alterar el orden del set
+			return (*(*itlist));
+		}
+		
+		/**
+		 @brief Operador de asignación
+		 @param otro Otro objeto de la clase iterator
+		 @return El iterador asignado
+		 */
+		gen_iterator & operator=(gen_iterator otro){	//Operador de asignación
+			if(this != &otro){
+				itmap = otro.itmap;
+				itlist = otro.itlist;
+				ptrclinvar = otro.ptrclinvar;
+			}
+			
+			return *this;
+		}
+		
+		/**
+		 @brief Operador de incremento
+		 @return Iterador incrementado
+		 */
+		gen_iterator &operator++(){
+			map<IDgen, list< set<Mutacion>::iterator> > genM = (*ptrclinvar).gen_map;
+			auto itm_end = genM.end();
+			auto itl_noend = itmap->second;
+			auto itl_end = itl_noend.end();
+			
+			
+			if(itlist != itl_end){
+				itlist++;
+			}
+			else{
+				if(itmap != itm_end){
+					itmap++;
+					itlist = (itmap->second).begin();
+				}
+			}
+			
+			return (*this);
+		}
+		
+		/**
+		 @brief Operador de decremento
+		 @return Operador decrementado
+		 */
+		gen_iterator &operator--(){
+			map<IDgen, list< set<Mutacion>::iterator> > genM = (*ptrclinvar).gen_map;
+			auto itm_begin = genM.begin();
+			auto itl_nobegin = itmap->second;
+			auto itl_begin = itl_nobegin.begin();
+			
+			
+			if(itlist != itl_begin){
+				itlist--;
+			}
+			else{
+				if(itmap != itm_begin){
+					itmap++;
+					itlist = (itmap->second).end();
+				}
+			}
+			
+			return (*this);
+		}
+		
+		/**
+		 @brief Operador de comparación
+		 @param otro Otro iterador
+		 @return ture si son iguales, false en caso contrario
+		 */
+		bool operator==(gen_iterator otro){
+			return itmap == otro.itmap && itlist == otro.itlist && ptrclinvar == otro.ptrclinvar;
+		}
+		
+		/**
+		 @brief Operador de diferencia
+		 @param otro Otro iterador
+		 @return true si son distintos, falso en caso contrario
+		 */
+		bool operator!=(gen_iterator otro){
+			return !((*this) == otro);
+		}
 	};
 	
 	//Functor
@@ -245,6 +339,7 @@ public:
 	/* Métodos relacionados con los iteradores */
 	iterator begin();
 	iterator end();
+	
 	iterator lower_bound(string cromosoma, unsigned int posicion);
 	iterator upper_bound(string cromosoma, unsigned int posicion);
 	
