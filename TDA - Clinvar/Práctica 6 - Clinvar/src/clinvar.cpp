@@ -17,6 +17,8 @@
 #include <set>
 #include <list>
 #include <fstream>
+#include <queue>
+#include <unordered_set>
 
 using namespace std;
 
@@ -193,6 +195,37 @@ set<IDmut> Clinvar::getMutacionesGen (IDgen ID){
 	}
 	
 	return conjunto_mut;
+}
+
+set<Mutacion, Clinvar::ProbMutaciones> Clinvar::topKMutaciones (int k, string keyword){
+	set<Mutacion, Clinvar::ProbMutaciones> topk;
+	list<IDenf> enfermedades = getEnfermedades(keyword);
+	set<IDmut> conj_mutaciones;
+	priority_queue<IDmut, vector<IDmut>, ProbMutaciones> cola_p;
+	unordered_set<IDmut> comprueba_repes;
+	
+	for(int i = 0; !enfermedades.empty(); i++){
+		conj_mutaciones = getMutacionesEnf(enfermedades.back());
+		
+		for(auto it = conj_mutaciones.begin(); it != conj_mutaciones.end(); ++it){
+			comprueba_repes.insert((*it));
+			
+			if(comprueba_repes.count((*it)) == 1){
+				cola_p.push((*it));
+			}
+		}
+		
+		enfermedades.pop_back();
+	}
+	
+	for(int i = 0; i < k; i++){
+		topk.insert(cola_p.top());
+		
+		cola_p.pop();
+	}
+	
+	
+	return topk;
 }
 
 
