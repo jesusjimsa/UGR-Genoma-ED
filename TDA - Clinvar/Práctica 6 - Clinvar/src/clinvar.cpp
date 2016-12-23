@@ -156,27 +156,43 @@ vector<Enfermedad> Clinvar::getEnfermedades(Mutacion & mut){
 }
 
 list<IDenf> Clinvar::getEnfermedades(string keyword){
-	list<IDenf> devolver;
+	list<IDenf> lista_enf;
 	
 	for(auto it = EnfDB.begin(); it != EnfDB.end(); ++it){
 		if((it->second).nameContains(keyword)){
-			devolver.push_back(it->first);
+			lista_enf.push_back(it->first);
 		}
 	}
 	
-	return devolver;
+	return lista_enf;
 }
 
 set<IDmut> Clinvar::getMutacionesEnf (IDenf ID){
-	set<IDmut> devolver;
+	set<IDmut> conjunto_mut;
 	
 	for(auto it = IDenf_mmap.begin(); it != IDenf_mmap.end(); ++it){
 		if(it->first == ID){
-			devolver.insert((*(it->second)).getID());
+			conjunto_mut.insert((*(it->second)).getID());
 		}
 	}
 	
-	return devolver;
+	return conjunto_mut;
+}
+
+set<IDmut> Clinvar::getMutacionesGen (IDgen ID){
+	set<IDmut> conjunto_mut;
+	
+	if(gen_map.count(ID) > 0){
+		list< set<Mutacion>::iterator > mutaciones = gen_map[ID];
+		
+		for(int i = 0; i < mutaciones.size(); i++){
+			conjunto_mut.insert( (*(mutaciones.back())).getID() );
+			
+			mutaciones.pop_back();
+		}
+	}
+	
+	return conjunto_mut;
 }
 
 

@@ -212,13 +212,22 @@ public:
 	/**
 	 @brief Consultor de mutaciones asociadas a una enfermedad
 	 @param ID ID de una enfermedad
-	 @return conjunto de mutaciones asociadas a una enfermedad
+	 @return Conjunto de mutaciones asociadas a una enfermedad
 	 
 	 Devuelve un conjunto ordenado (en orden creciente de IDmut) de todas las mutaciones que se encuentran asociadas
 	 a la enfermedad con identificador ID. Si no tuviese ninguna enfermedad asociada, devuelve el conjunto
 	 vacío.
 	 */
 	set<IDmut> getMutacionesEnf (IDenf ID);
+	
+	/**
+	 @brief Consultor de mutaciones asociadas a un gen
+	 @param ID ID de un gen
+	 @return Conjunto de mutaciones asociadas a un gen
+	 
+	 Devuelve un conjunto de todas las mutaciones que se encuentran asociadas a un gen determinado dado por ID.
+	 Si no tuviese ninguno, devuelve el conjunto vacío.
+	 */
 	set<IDmut> getMutacionesGen (IDgen ID);
 	set<Mutacion, ProbMutaciones> topKMutaciones (int k, string keyword);
 	
