@@ -114,100 +114,100 @@ public:
 	
 	/**
 	 @brief Devuelve el ID de la mutación
-	 @returns ID	valor del id de la mutación
+	 @return ID	valor del id de la mutación
 	 */
 	string getID( ) const;
 	
 	/**
 	 @brief Devuelve el identificador del cromosoma
-	 @returns chr	identificador del cromosoma
+	 @return chr	identificador del cromosoma
 	 */
 	string getChr( ) const;
 	
 	/**
 	 @brief Devuelve la posición del cromosoma.
-	 @returns pos	posición del cromosoma
+	 @return pos	posición del cromosoma
 	 */
 	unsigned int getPos( ) const;
 	
 	/**
 	 @brief Devuelve el vector del genoma básico
-	 @returns ref_alt	vector del genoma básico
+	 @return ref_alt	vector del genoma básico
 	 */
 	const vector<string> & getRef_alt () const;
 	
 	/**
 	 @brief Devuelve el vector de los genes.
-	 @returns genes	vector de los genes
+	 @return genes	vector de los genes
 	 */
 	const vector<string> & getGenes () const;
 	
 	/**
 	 @brief Devuelve si una mutación es común o no.
-	 @returns common	bool de si es común o no
+	 @return common	bool de si es común o no
 	 */
 	bool getCommon () const;
 	
 	/**
 	 @brief Devuelve el vector de las frecuencias de cada base.
-	 @returns caf	vector de las frecuencias
+	 @return caf	vector de las frecuencias
 	 */
 	const vector<float> & getCaf () const;
 	
 	/**
 	 @brief Devuelve el vector de las enfermedades.
-	 @returns enfermedad	vector de las enfermedades
+	 @return enfermedad	vector de las enfermedades
 	 */
 	const vector<Enfermedad> & getEnfermedades () const;
 	
 	/**
 	 @brief Devuelve el vector de enteros que conforman la relevancia clínica.
-	 @returns clnsig	vector de enteros con la relevancia clínica.
+	 @return clnsig	vector de enteros con la relevancia clínica.
 	 */
 	const vector<int> & getClnsig () const;
 	
 	/**
 	 @brief Devuelve la relevancia clínica convertida en el string hola
-	 @returns hola	string con la relevancia clínica.
+	 @return hola	string con la relevancia clínica.
 	 */
 	string imprime_Ref() const;	//Añado este método para imprimir el vector ref_alt
 	
 	/**
 	 @brief Devuelve la referencia de los genes convertida en el string hola
-	 @returns hola	string con la referencia
+	 @return hola	string con la referencia
 	 */
 	string imprime_Genes() const;	//Lo mismo para genes
 	
 	/**
 	 @brief Devuelve la frecuencia de cada base.
-	 @returns hola	string con la frecuencia
+	 @return hola	string con la frecuencia
 	 */
 	string imprime_Caf() const;	//eequilicuá
 	
 	/**
 	 @brief Devuelve la las enfermedades asociadas
-	 @returns hola	string con las enfermedades
+	 @return hola	string con las enfermedades
 	 */
 	string imprime_Enfermedades()const;	//Lo mismo
 	
 	/**
 	 @brief Sobrecarga el operador = para ajustarlo a una mutación
 	 @param m	mutación a la que se iguala
-	 @returns *this
+	 @return *this
 	 */
 	Mutacion & operator=(const Mutacion & m);
 	
 	/**
 	 @brief Sobrecarga el operador == para compararlo con una mutación
 	 @param m	mutación a comparar
-	 @returns iguales
+	 @return iguales
 	 */
 	bool operator==(const Mutacion & m) const;
 	
 	/**
 	 @brief ESobrecarga el operador < para comparar una mutación
 	 @param m	mutación a comparar
-	 @returns menor
+	 @return menor
 	 */
 	bool operator<(const Mutacion & m) const;      //El orden viene determinado por Chr y pos. El primer criterio es el número de cromosoma. El orden para el número de cromosoma se rige por "1"<"2"<"3"<...<"22"<"X"<"Y"<"MT". Dos mutaciones del mismo cromosoma deben ordenarse según su posición, de menor posición a mayor (orden natural de enteros).
 	
@@ -217,7 +217,7 @@ public:
  @brief Sobrecarga el operador << para imprimir mutaciones.
  @param os	flujo de salida
  @param m	mutación a imprimir
- @returns os	flujo de impresión
+ @return os	flujo de impresión
  */
 ostream& operator<< ( ostream& os, const Mutacion& m);   //Imprimir TODOS los campos del objeto mutación.
 
