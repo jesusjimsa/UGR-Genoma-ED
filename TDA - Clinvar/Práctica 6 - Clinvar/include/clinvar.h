@@ -137,7 +137,7 @@ public:
 	class ProbMutaciones{
 	public:
 		bool operator()(Mutacion a, Mutacion b){
-			return a < b;
+			return (1 - a.getCaf()[0]) > (1 - b.getCaf()[0]);
 		}
 	};
 	
@@ -229,6 +229,17 @@ public:
 	 Si no tuviese ninguno, devuelve el conjunto vacío.
 	 */
 	set<IDmut> getMutacionesGen (IDgen ID);
+	
+	/**
+	 @brief Mutaciones ordenadas según su probabilidad
+	 @param k Número de mutaciones a mostrar
+	 @param keyword Mutaciones que contengan esta palabra
+	 @return Conjunto de mutaciones ordenado por su probabilidad
+	 
+	 Dado un string 'keyword', el sistema recupera todas las enfermedades cuyo nombre contiene keyword, y devuelve
+	 un set ordenado de mutaciones, en orden decreciente de probabilidad, con las k mutaciones más frecuentes en la
+	 población asociadas con esas enfermedades.
+	 */
 	set<Mutacion, ProbMutaciones> topKMutaciones (int k, string keyword);
 	
 	/* Métodos relacionados con los iteradores */
