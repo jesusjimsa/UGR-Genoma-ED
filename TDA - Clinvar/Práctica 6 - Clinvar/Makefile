@@ -1,25 +1,32 @@
-CPPFLAGS = g++ -std=c++11 -c
+OBJ = obj
+BIN = bin
+INC = include
+SRC = src
+CPPFLAGS = g++ -std=c++11 -c -O3 -g
 
 #Creación de ejecutables
 
-principal : principal.o enfermedad.o mutacion.o 
-	g++ -O3 -o principal principal.o enfermedad.o mutacion.o  
+$(BIN)/principal : $(OBJ)/principal.o $(OBJ)/enfermedad.o $(OBJ)/mutacion.o $(OBJ)/clinvar.o
+	g++ -g -O3 -o $(BIN)/principal $(OBJ)/principal.o $(OBJ)/enfermedad.o $(OBJ)/mutacion.o $(OBJ)/clinvar.o
 
 #Creación de archivos objeto
 
-principal.o: principal.cpp
-	$(CPPFLAGS) principal.cpp -o principal.o -I.
+$(OBJ)/principal.o: $(SRC)/principal.cpp
+	$(CPPFLAGS) $(SRC)/principal.cpp -o $(OBJ)/principal.o -Iinclude/
 
-enfermedad.o: enfermedad.cpp
-	$(CPPFLAGS) enfermedad.cpp -o enfermedad.o -I.
+$(OBJ)/enfermedad.o: $(SRC)/enfermedad.cpp
+	$(CPPFLAGS) $(SRC)/enfermedad.cpp -o $(OBJ)/enfermedad.o -Iinclude/
 
-mutacion.o: mutacion.cpp
-	$(CPPFLAGS) mutacion.cpp -o mutacion.o -I.
+$(OBJ)/mutacion.o: $(SRC)/mutacion.cpp
+	$(CPPFLAGS) $(SRC)/mutacion.cpp -o $(OBJ)/mutacion.o -Iinclude/
+
+$(OBJ)/clinvar.o: $(SRC)/clinvar.cpp
+	$(CPPFLAGS) $(SRC)/clinvar.cpp -o $(OBJ)/clinvar.o -Iinclude/
 
 #Limpieza de archivos objeto, ejecutables y bibliotecas
 
 clean:
 	echo "Limpiando..."
-	rm *.o
+	rm $(OBJ)/*
 mrproper: clean
-	rm principal
+	rm $(BIN)/*
