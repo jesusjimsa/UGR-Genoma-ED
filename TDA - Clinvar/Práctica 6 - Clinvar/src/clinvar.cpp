@@ -227,36 +227,75 @@ set<Mutacion, Clinvar::ProbMutaciones> Clinvar::topKMutaciones (int k, string ke
 	return topk;
 }
 
+Clinvar::iterator Clinvar::begin(){
+	auto aux = mutDB.begin();
+	iterator it(aux);
+	
+	return it;
+}
 
+Clinvar::iterator Clinvar::end(){
+	auto aux = mutDB.end();
+	iterator it(aux);
+	
+	return it;
+}
 
+Clinvar::enfermedad_iterator Clinvar::ebegin(){
+	return EnfDB.begin();
+}
 
+Clinvar::enfermedad_iterator Clinvar::eend(){
+	return EnfDB.end();
+}
 
+Clinvar::gen_iterator Clinvar::gbegin(){
+	auto gen_it = gen_map.begin();
+	auto inside_gen_it = ((*gen_it).second).begin();
+	
+	return gen_iterator(gen_it, inside_gen_it, this);
+}
 
+Clinvar::gen_iterator Clinvar::gend(){
+	auto gen_it = gen_map.end();
+	auto inside_gen_it = ((*gen_it).second).end();
+	
+	return gen_iterator(gen_it, inside_gen_it, this);
+}
 
+Clinvar::iterator Clinvar::lower_bound(string cromosoma, unsigned int posicion){
+	iterator lower(mutDB.end());
+	bool encontrada = false;
+	
+	for(auto it = mutDB.begin(); it != mutDB.end() && !encontrada; ++it){
+		if(stoi(cromosoma) >= stoi((*it).getChr()) ||
+		   ((*it).getChr() == "X" && (cromosoma == "X" || cromosoma == "Y" || cromosoma == "MT")) ||
+		   ((*it).getChr() == "Y" && (cromosoma == "Y" || cromosoma == "MT")) ||
+		   ((*it).getChr() == "MT" && cromosoma == "MT")){
+			if(posicion >= (*it).getPos()){
+				encontrada = true;
+				lower = iterator(it);
+			}
+		}
+	}
+	
+	return lower;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Clinvar::iterator Clinvar::upper_bound(string cromosoma, unsigned int posicion){
+	iterator upper(mutDB.end());
+	bool encontrada = false;
+	
+	for(auto it = mutDB.begin(); it != mutDB.end() && !encontrada; ++it){
+		if(stoi(cromosoma) > stoi((*it).getChr()) ||
+		   ((*it).getChr() == "X" && (cromosoma == "Y" || cromosoma == "MT")) ||
+		   ((*it).getChr() == "Y" && cromosoma == "MT")){
+			if(posicion > (*it).getPos()){
+				encontrada = true;
+				upper = iterator(it);
+			}
+		}
+	}
+	
+	return upper;
+}

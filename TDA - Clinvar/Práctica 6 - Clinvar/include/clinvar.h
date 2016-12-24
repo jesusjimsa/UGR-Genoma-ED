@@ -33,7 +33,7 @@ private:
 	multimap<IDenf, set<Mutacion>::iterator> IDenf_mmap;	// Asocia enfermedad con mutaciones
 public:
 	/**
-	 @brief iterador sobre mutaciones en orden creciente de cromosoma/posicion
+	 @brief Iterador sobre mutaciones en orden creciente de cromosoma/posicion
 	*/
 	class iterator {
 	private:
@@ -117,12 +117,12 @@ public:
 	};
 	
 	/**
-	 @brief iterador sobre enfermedades
+	 @brief Iterador sobre enfermedades
 	*/
 	typedef map<IDenf, Enfermedad>::iterator enfermedad_iterator;	// Nos vale utilizar el iterador del map
 	
 	/**
-	 @brief iterador sobre mutaciones considerando el orden creciente del ID del gen
+	 @brief Iterador sobre mutaciones considerando el orden creciente del ID del gen
 	 */
 	class gen_iterator {
 	private:
@@ -135,6 +135,16 @@ public:
 		 */
 		gen_iterator(){
 			
+		}
+		
+		/**
+		 @brief Constructor a partir de dos iteradores y un objeto Clinvar
+		 */
+		gen_iterator(map<IDgen, list< set<Mutacion>::iterator> >::iterator itmap, list< set<Mutacion>::iterator >::iterator itlist,
+					 Clinvar *ptrclinvar){
+			this->itmap = itmap;
+			this->itlist = itlist;
+			this->ptrclinvar = ptrclinvar;
 		}
 		
 		/**
@@ -337,16 +347,57 @@ public:
 	set<Mutacion, ProbMutaciones> topKMutaciones (int k, string keyword);
 	
 	/* Métodos relacionados con los iteradores */
+	
+	/**
+	 @brief Iterador a la primera mutación
+	 @return Iterador a la primera mutación
+	 */
 	iterator begin();
+	
+	/**
+	 @brief Iterador a después de la última mutación
+	 @return Iterador a después de la última mutación
+	 */
 	iterator end();
 	
+	/**
+	 @brief Búsqueda por rango considerando el par de valores cromosoma/posición
+	 @param cromosoma Cromosoma del rango
+	 @param posicion Posición del rango
+	 @return Iterador que apunta a la primera mutación que es mayor o igual a los parámetros
+	 */
 	iterator lower_bound(string cromosoma, unsigned int posicion);
+	
+	/**
+	 @brief Búsqueda por rango considerando el par de valores cromosoma/posición
+	 @param cromosoma Cromosoma del rango
+	 @param posicion Posición del rango
+	 @return Iterador que apunta a la primera mutación que es mayor estricta a los parámetros
+	 */
 	iterator upper_bound(string cromosoma, unsigned int posicion);
 	
+	/**
+	 @brief Iterador a la primera enfermedad
+	 @return Iterador a la primera enfermedad
+	 */
 	enfermedad_iterator ebegin();
+	
+	/**
+	 @brief Iterador a después de la última enfermedad
+	 @return Iterador a después de la última enfermedad
+	 */
 	enfermedad_iterator eend();
 	
+	/**
+	 @brief Iterador al primer gen
+	 @return Iterador al primer gen
+	 */
 	gen_iterator gbegin();
+	
+	/**
+	 @brief Iterador a después del último gen
+	 @return Iterador a después del último gen
+	 */
 	gen_iterator gend();
 	
 	//Clases amigas
