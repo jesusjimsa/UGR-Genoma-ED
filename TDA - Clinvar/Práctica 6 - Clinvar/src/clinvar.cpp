@@ -201,7 +201,7 @@ set<Mutacion, Clinvar::ProbMutaciones> Clinvar::topKMutaciones (int k, string ke
 	set<Mutacion, Clinvar::ProbMutaciones> topk;
 	list<IDenf> enfermedades = getEnfermedades(keyword);
 	set<IDmut> conj_mutaciones;
-	priority_queue<IDmut, vector<IDmut>, ProbMutaciones> cola_p;
+	//priority_queue<IDmut, vector<IDmut>, ProbMutaciones> cola_p;
 	unordered_set<IDmut> comprueba_repes;
 	
 	for(int i = 0; !enfermedades.empty(); i++){
@@ -211,17 +211,18 @@ set<Mutacion, Clinvar::ProbMutaciones> Clinvar::topKMutaciones (int k, string ke
 			comprueba_repes.insert((*it));
 			
 			if(comprueba_repes.count((*it)) == 1){
-				cola_p.push((*it));
+				topk.insert((*it));
 			}
 		}
 		
 		enfermedades.pop_back();
 	}
 	
-	for(int i = 0; i < k; i++){
-		topk.insert(cola_p.top());
-		
-		cola_p.pop();
+	auto it = topk.end();
+	--it;
+	
+	for(it = it; topk.size() > k; --it){
+		it = topk.erase(it);
 	}
 	
 	return topk;

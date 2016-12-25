@@ -14,9 +14,9 @@
 using namespace std;
 
 Enfermedad::Enfermedad(){
-	name = "Ninguno";
-	ID = "Ninguno";
-	database = "Ninguno";
+	name = "-";
+	ID = "-";
+	database = "-";
 }
 
 Enfermedad::Enfermedad(const string & name, const string & ID, const string & database){

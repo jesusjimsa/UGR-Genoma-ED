@@ -7,7 +7,7 @@ CPPFLAGS = g++ -std=c++11 -c -O3 -g
 #Creación de ejecutables
 
 $(BIN)/principal : $(OBJ)/principal.o $(OBJ)/enfermedad.o $(OBJ)/mutacion.o $(OBJ)/clinvar.o
-	g++ -g -O3 -o $(BIN)/principal $(OBJ)/principal.o $(OBJ)/enfermedad.o $(OBJ)/mutacion.o $(OBJ)/clinvar.o
+	g++ -std=c++11 -g -O3 -o $(BIN)/principal $(OBJ)/principal.o $(OBJ)/enfermedad.o $(OBJ)/mutacion.o $(OBJ)/clinvar.o
 
 #Creación de archivos objeto
 

@@ -40,7 +40,7 @@ Mutacion::Mutacion(const string & str){
 	int j = 0;
 	unsigned long i = 0;
 
-	cerr << "Invocado constructor mutacion::mutacion(str)" << endl;
+	//cerr << "Invocado constructor mutacion::mutacion(str)" << endl;
 	// OBTENER CHR
 	(*this).chr = str.substr(0,1);
 	//cerr<< "\tchr: "<<(*this).chr<<endl; 
