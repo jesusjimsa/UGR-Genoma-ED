@@ -53,7 +53,7 @@ int main(int argc, char *argv[]){
 	
 	cerr << "getenfermedades 2 correcto" << endl;
 	
-	auto set_enf = prueba.getMutacionesEnf(vec_enf.at(0).getID());
+	auto set_enf = prueba.getMutacionesEnf("HP:0011198:CN166927");
 	
 	cerr << "getenfermedades 3 correcto" << endl;
 	
@@ -71,27 +71,3 @@ int main(int argc, char *argv[]){
 	
 	return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

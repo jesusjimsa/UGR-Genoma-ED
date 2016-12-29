@@ -241,7 +241,6 @@ public:
 	class ProbMutaciones{
 	public:
 		bool operator()(Mutacion a, Mutacion b){
-			float prob_a, prob_b;
 			bool functor = false;
 			
 			if(a.getCaf().size() == 0){

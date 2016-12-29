@@ -48,7 +48,6 @@ void Clinvar::load (string nombreDB){
 			
 			// Invoco el constructor de mutación que recibe una cadena completa, la parsea y crea la mutación.
 			Mutacion mut = Mutacion(cadena);
-			//mutDB.insert(mut);
 			
 			insert(mut);
 			
@@ -57,24 +56,7 @@ void Clinvar::load (string nombreDB){
 		archivo.close();
 		
 	} // else
-	/*
 	
-	for(it = mutDB.begin(); it != mutDB.end(); ++it){
-		IDm_map[(*it).getID()] = it;
-		
-		for(int i = 0; i < (*it).getGenes().size(); i++){
-			gen_map[(*it).getGenes()[i]].push_back(it);	//Este mapa contiene una lista de iteradores
-		}
-		
-		for(int i = 0; i < (*it).getEnfermedades().size(); i++){
-			//Mapa con la lista de mutaciones, el ID se asocia
-			EnfDB[(*it).getEnfermedades().at(i).getID()] = (*it).getEnfermedades().at(i);
-			
-			//Cada enfermedad se asocia a una mutación
-			IDenf_mmap.insert(pair<IDenf, set<Mutacion>::iterator>((*it).getEnfermedades().at(i).getID(), it));
-		}
-	}
-	*/
 	archivo.close();
 }
 
@@ -192,7 +174,7 @@ set<IDmut> Clinvar::getMutacionesEnf (IDenf ID){
 	vector<Enfermedad> enfermedades;
 	bool siguiente = false;
 	
-	//*
+	/*
 	 for(auto it = IDenf_mmap.begin(); it != IDenf_mmap.end(); ++it){
 		if((*it).first == ID){
 			conjunto_mut.insert((*((*it).second)).getID());
@@ -212,7 +194,7 @@ set<IDmut> Clinvar::getMutacionesEnf (IDenf ID){
 		
 		siguiente = false;
 	}
-	/*/
+	//*/
 	return conjunto_mut;
 }
 
