@@ -172,9 +172,9 @@ list<IDenf> Clinvar::getEnfermedades(string keyword){
 set<IDmut> Clinvar::getMutacionesEnf (IDenf ID){
 	set<IDmut> conjunto_mut;
 	vector<Enfermedad> enfermedades;
-	bool siguiente = false;
+	//bool siguiente = false;
 	
-	/*
+	//*
 	 for(auto it = IDenf_mmap.begin(); it != IDenf_mmap.end(); ++it){
 		if((*it).first == ID){
 			conjunto_mut.insert((*((*it).second)).getID());
@@ -194,7 +194,7 @@ set<IDmut> Clinvar::getMutacionesEnf (IDenf ID){
 		
 		siguiente = false;
 	}
-	//*/
+	/*/
 	return conjunto_mut;
 }
 
