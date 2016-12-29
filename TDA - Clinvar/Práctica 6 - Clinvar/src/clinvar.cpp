@@ -106,7 +106,7 @@ bool Clinvar::erase (IDmut ID){
 				/*
 				 Como cada entrada del multimapa tendrá un iterador a una mutación, solo se borrará
 				 una enfermedad, aunque haya varias con el mismo ID
-				*/
+				 */
 			}
 		}
 		
@@ -171,11 +171,28 @@ list<IDenf> Clinvar::getEnfermedades(string keyword){
 
 set<IDmut> Clinvar::getMutacionesEnf (IDenf ID){
 	set<IDmut> conjunto_mut;
+	vector<Enfermedad> enfermedades;
+	bool siguiente = false;
 	
-	for(auto it = IDenf_mmap.begin(); it != IDenf_mmap.end(); ++it){
+	/*
+	 for(auto it = IDenf_mmap.begin(); it != IDenf_mmap.end(); ++it){
 		if(it->first == ID){
-			conjunto_mut.insert((*(it->second)).getID());
+	 conjunto_mut.insert((*(it->second)).getID());
 		}
+	 }
+	*/
+	
+	for(auto it = mutDB.begin(); it != mutDB.end(); ++it){
+		enfermedades = (*it).getEnfermedades();
+		
+		for(int i = 0; i < enfermedades.size() && !siguiente; i++){
+			if(enfermedades[i].getID() == ID){
+				conjunto_mut.insert((*it).getID());
+				siguiente = true;
+			}
+		}
+		
+		siguiente = false;
 	}
 	
 	return conjunto_mut;
@@ -200,41 +217,48 @@ set<IDmut> Clinvar::getMutacionesGen (IDgen ID){
 set<Mutacion, Clinvar::ProbMutaciones> Clinvar::topKMutaciones (int k, string keyword){
 	set<Mutacion, Clinvar::ProbMutaciones> topk;
 	list<IDenf> enfermedades = getEnfermedades(keyword);
-	//CC: Test getEnfermedades 
+	
+	//CC: Test getEnfermedades
 	cerr << "\n\tDentro de topKmutaciones: \n\tRecuperadas " << enfermedades.size() << " enfermedades. Listado: " << endl;
-	for (auto it = enfermedades.begin(); it!= enfermedades.end(); it++){
+	
+	for (auto it = enfermedades.begin(); it != enfermedades.end(); it++){
 		cerr << "\t" << (*it) << endl;
 	}
+	
 	set<IDmut> conj_mutaciones;
 	//priority_queue<IDmut, vector<IDmut>, ProbMutaciones> cola_p;
 	unordered_set<IDmut> comprueba_repes;
 	
 	for(int i = 0; !enfermedades.empty(); i++){
 		conj_mutaciones = getMutacionesEnf(enfermedades.back());
+		
 		//CC: Test getMutacionesEnf
 		cerr << "\n\tRecuperando mutaciones asociadas a enfermedad: " << enfermedades.back() << ": \n\tRecuperadas " << conj_mutaciones.size() << " mutaciones. Listado: " << endl;
+		
 		for (auto it = conj_mutaciones.begin(); it!= conj_mutaciones.end(); it++){
-			cerr << "\t" << (*it) << endl; 
+			cerr << "\t" << (*it) << endl;
 		}
 		
 		for(auto it = conj_mutaciones.begin(); it != conj_mutaciones.end(); ++it){
 			comprueba_repes.insert((*it));
 			
 			if(comprueba_repes.count((*it)) == 1){
-				topk.insert((*it));	//CC: OJO! estás insertando en topk un elemento de conj_mutaciones (es decir, un IDmut), NO UNA mutacion coompleta, sino solo el string de su ID!! 
+				topk.insert((*find_Mut((*it))));	//CC: OJO! estás insertando en topk un elemento de conj_mutaciones (es decir, un IDmut), NO UNA mutacion coompleta, sino solo el string de su ID!!
 			}
 		}
 		
 		enfermedades.pop_back();
 	}
-	/*
-	//CC: en lugar de hacerlo así, hazlo con la priority_queue
-	auto it = topk.end();
-	--it;
 	
-	for(it = it; topk.size() > k; --it){
+	/*
+	 //CC: en lugar de hacerlo así, hazlo con la priority_queue
+	 auto it = topk.end();
+	 --it;
+	 
+	 for(it = it; topk.size() > k; --it){
 		it = topk.erase(it);
-	}*/
+	 }
+	*/
 	
 	return topk;
 }
