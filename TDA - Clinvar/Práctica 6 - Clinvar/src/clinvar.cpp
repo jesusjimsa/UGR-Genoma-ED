@@ -26,6 +26,7 @@ using namespace std;
 void Clinvar::load (string nombreDB){
 	ifstream archivo;
 	string cadena;
+	set<Mutacion>::iterator it;
 	
 	archivo.open(nombreDB);
 	
@@ -43,20 +44,37 @@ void Clinvar::load (string nombreDB){
 		while (!archivo.eof()){
 			//cout << "leo:: " << cadena << endl;
 			cout << "\nLineas leidas: " << i << endl;
-			
 			i++;
 			
 			// Invoco el constructor de mutación que recibe una cadena completa, la parsea y crea la mutación.
 			Mutacion mut = Mutacion(cadena);
+			//mutDB.insert(mut);
 			
-			insert(mut);	//Inserto la posición en Clinvar
+			insert(mut);
 			
 			getline(archivo,cadena,'\n');
 		}
 		archivo.close();
 		
 	} // else
+	/*
 	
+	for(it = mutDB.begin(); it != mutDB.end(); ++it){
+		IDm_map[(*it).getID()] = it;
+		
+		for(int i = 0; i < (*it).getGenes().size(); i++){
+			gen_map[(*it).getGenes()[i]].push_back(it);	//Este mapa contiene una lista de iteradores
+		}
+		
+		for(int i = 0; i < (*it).getEnfermedades().size(); i++){
+			//Mapa con la lista de mutaciones, el ID se asocia
+			EnfDB[(*it).getEnfermedades().at(i).getID()] = (*it).getEnfermedades().at(i);
+			
+			//Cada enfermedad se asocia a una mutación
+			IDenf_mmap.insert(pair<IDenf, set<Mutacion>::iterator>((*it).getEnfermedades().at(i).getID(), it));
+		}
+	}
+	*/
 	archivo.close();
 }
 
@@ -94,14 +112,14 @@ bool Clinvar::erase (IDmut ID){
 		
 		for(int i = 0; i < fuera.size(); i++){
 			for(auto ite = IDenf_mmap.begin(); ite != IDenf_mmap.end(); ++ite){
-				if(ite->first == fuera[i].getID()){
+				if((*ite).first == fuera[i].getID()){
 					mutaciones_asociadas[i]++;
 				}
 			}
 		}
 		
 		for(auto ite = IDenf_mmap.begin(); ite != IDenf_mmap.end(); ++ite){
-			if(ite->second == IDm_map[ID]){
+			if((*ite).second == IDm_map[ID]){
 				ite = IDenf_mmap.erase(ite);
 				/*
 				 Como cada entrada del multimapa tendrá un iterador a una mutación, solo se borrará
@@ -117,9 +135,9 @@ bool Clinvar::erase (IDmut ID){
 		}
 		
 		for(auto ite = gen_map.begin(); ite != gen_map.end(); ++ite){
-			for(auto list_ite = gen_map[ite->first].begin(); list_ite != gen_map[ite->first].end(); ++list_ite){
+			for(auto list_ite = gen_map[(*ite).first].begin(); list_ite != gen_map[(*ite).first].end(); ++list_ite){
 				if((*list_ite) == IDm_map[ID]){
-					list_ite = gen_map[ite->first].erase(list_ite);
+					list_ite = gen_map[(*ite).first].erase(list_ite);
 				}
 			}
 		}
@@ -162,7 +180,7 @@ list<IDenf> Clinvar::getEnfermedades(string keyword){
 	
 	for(auto it = EnfDB.begin(); it != EnfDB.end(); ++it){
 		if(((*it).second).nameContains(keyword)){
-			lista_enf.push_back(it->first);
+			lista_enf.push_back((*it).first);
 		}
 	}
 	
@@ -172,16 +190,16 @@ list<IDenf> Clinvar::getEnfermedades(string keyword){
 set<IDmut> Clinvar::getMutacionesEnf (IDenf ID){
 	set<IDmut> conjunto_mut;
 	vector<Enfermedad> enfermedades;
-	//bool siguiente = false;
+	bool siguiente = false;
 	
-	
+	//*
 	 for(auto it = IDenf_mmap.begin(); it != IDenf_mmap.end(); ++it){
 		if((*it).first == ID){
 			conjunto_mut.insert((*((*it).second)).getID());
 		}
 	 }
 	
-	/*
+	/*/
 	for(auto it = mutDB.begin(); it != mutDB.end(); ++it){
 		enfermedades = (*it).getEnfermedades();
 		
@@ -194,7 +212,7 @@ set<IDmut> Clinvar::getMutacionesEnf (IDenf ID){
 		
 		siguiente = false;
 	}
-	*/
+	/*/
 	return conjunto_mut;
 }
 
@@ -233,7 +251,8 @@ set<Mutacion, Clinvar::ProbMutaciones> Clinvar::topKMutaciones (int k, string ke
 		conj_mutaciones = getMutacionesEnf(enfermedades.back());
 		
 		//CC: Test getMutacionesEnf
-		cerr << "\n\tRecuperando mutaciones asociadas a enfermedad: " << enfermedades.back() << " \n\tRecuperadas " << conj_mutaciones.size() << " mutaciones. Listado: " << endl;
+		cerr << "\n\tRecuperando mutaciones asociadas a enfermedad: " << enfermedades.back() << endl;
+		cout << "\tRecuperadas " << conj_mutaciones.size() << " mutaciones. Listado: " << endl;
 		
 		for (auto it = conj_mutaciones.begin(); it!= conj_mutaciones.end(); it++){
 			cerr << "\t" << (*it) << endl;

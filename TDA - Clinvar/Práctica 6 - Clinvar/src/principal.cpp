@@ -32,7 +32,7 @@ int main(int argc, char *argv[]){
 	
 	cerr << "Insercion correcta" << endl;
 	
-	prueba.erase("rs797044762");
+	prueba.erase("rspueba_insertar");
 	
 	cerr << "Borrado correcto" << endl;
 	
