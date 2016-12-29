@@ -545,7 +545,7 @@ string Mutacion::imprime_Enfermedades() const{
 	string hola;
 
 	for(unsigned int i = 0; i < enfermedades.size(); i++){
-		hola = hola + " " + enfermedades[i].imprime_Enf();
+		hola = hola + " " + enfermedades[i].imprime_Enf() + "\n";
 	}
 
 	return hola;

@@ -41,7 +41,7 @@ void Clinvar::load (string nombreDB){
 		//leo la tabla de mutaciones, una línea cada vez
 		int i = 1;
 		while (!archivo.eof()){
-			cout << "leo:: " << cadena << endl;
+			//cout << "leo:: " << cadena << endl;
 			cout << "\nLineas leidas: " << i << endl;
 			
 			i++;
@@ -161,7 +161,7 @@ list<IDenf> Clinvar::getEnfermedades(string keyword){
 	list<IDenf> lista_enf;
 	
 	for(auto it = EnfDB.begin(); it != EnfDB.end(); ++it){
-		if((it->second).nameContains(keyword)){
+		if(((*it).second).nameContains(keyword)){
 			lista_enf.push_back(it->first);
 		}
 	}
@@ -200,30 +200,41 @@ set<IDmut> Clinvar::getMutacionesGen (IDgen ID){
 set<Mutacion, Clinvar::ProbMutaciones> Clinvar::topKMutaciones (int k, string keyword){
 	set<Mutacion, Clinvar::ProbMutaciones> topk;
 	list<IDenf> enfermedades = getEnfermedades(keyword);
+	//CC: Test getEnfermedades 
+	cerr << "\n\tDentro de topKmutaciones: \n\tRecuperadas " << enfermedades.size() << " enfermedades. Listado: " << endl;
+	for (auto it = enfermedades.begin(); it!= enfermedades.end(); it++){
+		cerr << "\t" << (*it) << endl;
+	}
 	set<IDmut> conj_mutaciones;
 	//priority_queue<IDmut, vector<IDmut>, ProbMutaciones> cola_p;
 	unordered_set<IDmut> comprueba_repes;
 	
 	for(int i = 0; !enfermedades.empty(); i++){
 		conj_mutaciones = getMutacionesEnf(enfermedades.back());
+		//CC: Test getMutacionesEnf
+		cerr << "\n\tRecuperando mutaciones asociadas a enfermedad: " << enfermedades.back() << ": \n\tRecuperadas " << conj_mutaciones.size() << " mutaciones. Listado: " << endl;
+		for (auto it = conj_mutaciones.begin(); it!= conj_mutaciones.end(); it++){
+			cerr << "\t" << (*it) << endl; 
+		}
 		
 		for(auto it = conj_mutaciones.begin(); it != conj_mutaciones.end(); ++it){
 			comprueba_repes.insert((*it));
 			
 			if(comprueba_repes.count((*it)) == 1){
-				topk.insert((*it));
+				topk.insert((*it));	//CC: OJO! estás insertando en topk un elemento de conj_mutaciones (es decir, un IDmut), NO UNA mutacion coompleta, sino solo el string de su ID!! 
 			}
 		}
 		
 		enfermedades.pop_back();
 	}
-	
+	/*
+	//CC: en lugar de hacerlo así, hazlo con la priority_queue
 	auto it = topk.end();
 	--it;
 	
 	for(it = it; topk.size() > k; --it){
 		it = topk.erase(it);
-	}
+	}*/
 	
 	return topk;
 }

@@ -61,17 +61,37 @@ int main(int argc, char *argv[]){
 	
 	cerr << "getenfermedades 4 correcto" << endl;
 	
-	auto top = prueba.topKMutaciones(10, "muscular");
+	auto top = prueba.topKMutaciones(10, "Multiple_sclerosis");
 	
 	cerr << "topkmutaciones correcto, a imprimir :(" << endl;
 	
-	int numero = 1;
-	
 	for(auto it = top.begin(); it != top.end(); ++it){
-		cout << numero << ": " << endl;
-		cout << (*it) << flush << endl;
-		numero++;
+		cout << "Enfermedad: " << (*it) << endl;
 	}
 	
 	return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
