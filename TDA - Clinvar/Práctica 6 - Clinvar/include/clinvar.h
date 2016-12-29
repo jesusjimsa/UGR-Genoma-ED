@@ -241,7 +241,22 @@ public:
 	class ProbMutaciones{
 	public:
 		bool operator()(Mutacion a, Mutacion b){
-			return (1 - a.getCaf()[0]) > (1 - b.getCaf()[0]);
+			float prob_a, prob_b;
+			bool functor = false;
+			
+			if(a.getCaf().size() == 0){
+				functor = false;
+			}
+			
+			if(b.getCaf().size() == 0){
+				functor = true;
+			}
+			
+			if(a.getCaf().size() > 0 && b.getCaf().size() > 0){
+				functor = (1 - a.getCaf()[0]) > (1 - b.getCaf()[0]);
+			}
+			
+			return functor;
 		}
 	};
 	

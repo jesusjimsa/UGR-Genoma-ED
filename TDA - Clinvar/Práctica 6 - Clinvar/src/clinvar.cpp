@@ -172,16 +172,16 @@ list<IDenf> Clinvar::getEnfermedades(string keyword){
 set<IDmut> Clinvar::getMutacionesEnf (IDenf ID){
 	set<IDmut> conjunto_mut;
 	vector<Enfermedad> enfermedades;
-	bool siguiente = false;
+	//bool siguiente = false;
 	
-	/*
+	
 	 for(auto it = IDenf_mmap.begin(); it != IDenf_mmap.end(); ++it){
-		if(it->first == ID){
-	 conjunto_mut.insert((*(it->second)).getID());
+		if((*it).first == ID){
+			conjunto_mut.insert((*((*it).second)).getID());
 		}
 	 }
-	*/
 	
+	/*
 	for(auto it = mutDB.begin(); it != mutDB.end(); ++it){
 		enfermedades = (*it).getEnfermedades();
 		
@@ -194,7 +194,7 @@ set<IDmut> Clinvar::getMutacionesEnf (IDenf ID){
 		
 		siguiente = false;
 	}
-	
+	*/
 	return conjunto_mut;
 }
 
@@ -233,7 +233,7 @@ set<Mutacion, Clinvar::ProbMutaciones> Clinvar::topKMutaciones (int k, string ke
 		conj_mutaciones = getMutacionesEnf(enfermedades.back());
 		
 		//CC: Test getMutacionesEnf
-		cerr << "\n\tRecuperando mutaciones asociadas a enfermedad: " << enfermedades.back() << ": \n\tRecuperadas " << conj_mutaciones.size() << " mutaciones. Listado: " << endl;
+		cerr << "\n\tRecuperando mutaciones asociadas a enfermedad: " << enfermedades.back() << " \n\tRecuperadas " << conj_mutaciones.size() << " mutaciones. Listado: " << endl;
 		
 		for (auto it = conj_mutaciones.begin(); it!= conj_mutaciones.end(); it++){
 			cerr << "\t" << (*it) << endl;
@@ -243,7 +243,7 @@ set<Mutacion, Clinvar::ProbMutaciones> Clinvar::topKMutaciones (int k, string ke
 			comprueba_repes.insert((*it));
 			
 			if(comprueba_repes.count((*it)) == 1){
-				topk.insert((*find_Mut((*it))));	//CC: OJO! estás insertando en topk un elemento de conj_mutaciones (es decir, un IDmut), NO UNA mutacion coompleta, sino solo el string de su ID!!
+				topk.insert((*find_Mut((*it))));
 			}
 		}
 		

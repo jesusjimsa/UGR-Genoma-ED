@@ -66,7 +66,7 @@ int main(int argc, char *argv[]){
 	cerr << "topkmutaciones correcto, a imprimir :(" << endl;
 	
 	for(auto it = top.begin(); it != top.end(); ++it){
-		cout << "Enfermedad: " << (*it) << endl;
+		cout << "TopK: " << (*it) << endl;
 	}
 	
 	return 0;
