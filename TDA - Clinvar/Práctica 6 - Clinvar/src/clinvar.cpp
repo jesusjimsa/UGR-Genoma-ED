@@ -175,26 +175,26 @@ set<IDmut> Clinvar::getMutacionesEnf (IDenf ID){
 	//bool siguiente = false;
 	
 	//*
-	 for(auto it = IDenf_mmap.begin(); it != IDenf_mmap.end(); ++it){
+	for(auto it = IDenf_mmap.begin(); it != IDenf_mmap.end(); ++it){
 		if((*it).first == ID){
 			conjunto_mut.insert((*((*it).second)).getID());
 		}
-	 }
+	}
 	
 	/*/
-	for(auto it = mutDB.begin(); it != mutDB.end(); ++it){
+	 for(auto it = mutDB.begin(); it != mutDB.end(); ++it){
 		enfermedades = (*it).getEnfermedades();
 		
 		for(int i = 0; i < enfermedades.size() && !siguiente; i++){
-			if(enfermedades[i].getID() == ID){
-				conjunto_mut.insert((*it).getID());
-				siguiente = true;
-			}
+	 if(enfermedades[i].getID() == ID){
+	 conjunto_mut.insert((*it).getID());
+	 siguiente = true;
+	 }
 		}
 		
 		siguiente = false;
-	}
-	/*/
+	 }
+	 /*/
 	return conjunto_mut;
 }
 
@@ -259,7 +259,7 @@ set<Mutacion, Clinvar::ProbMutaciones> Clinvar::topKMutaciones (int k, string ke
 	 for(it = it; topk.size() > k; --it){
 		it = topk.erase(it);
 	 }
-	*/
+	 */
 	
 	for(int i = 0; i < k; i++){
 		topk.insert(cola_p.top());
