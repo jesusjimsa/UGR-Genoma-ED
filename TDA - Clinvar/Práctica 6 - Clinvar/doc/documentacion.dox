@@ -1,0 +1,131 @@
+/*! \mainpage  Usando la STL
+ *
+\version Práctica 6 Clinvar. Ver 0.
+\author  Jesús Jiménez Sánchez
+
+\tableofcontents
+
+\section intro_sec Introducción
+
+En esta práctica se usan los datos de la STL para construir el tipo de dato Clinvar, que se usará para almacenar las mutaciones 
+
+
+\section clinvar.h
+
+\code
+#include <stdio.h>
+#include <string>
+#include <set>
+#include <list>
+#include <map>
+#include <unordered_map>
+#include "mutacion.h"
+#include "enfermedad.h"
+
+using namespace std;
+
+typedef string IDgen;
+typedef string IDmut;
+typedef string IDenf;
+
+class Clinvar{
+private:
+	set<Mutacion> mutDB;	//Base de datos que contiene toda la información asociada a una mutacion
+	unordered_map<IDmut, set<Mutacion>::iterator> IDm_map;	// Asocia IDmutacion con mutación
+	map<IDgen, list< set<Mutacion>::iterator> > gen_map;	// Asocia genes con mutaciones
+	map<IDenf, Enfermedad> EnfDB;	// Base de datos de enfermedades
+	multimap<IDenf, set<Mutacion>::iterator> IDenf_mmap;	// Asocia enfermedad con mutaciones
+public:
+	class iterator {
+		. . .
+	};
+
+	typedef map<IDenf, Enfermedad>::iterator enfermedad_iterator;	// Nos vale utilizar el iterador del map
+	
+	class gen_iterator {
+		. . .
+	};
+	
+	//Functor
+	class ProbMutaciones{
+		. . .
+	};
+
+	void load (string nombreDB);
+
+	void insert (const Mutacion & x);
+
+	bool erase (IDmut ID);
+
+	iterator find_Mut(IDmut ID);
+
+	enfermedad_iterator find_Enf(IDenf ID);
+
+	vector<Enfermedad> getEnfermedades(Mutacion & mut);
+
+	list<IDenf> getEnfermedades(string keyword);
+
+	set<IDmut> getMutacionesEnf (IDenf ID);
+
+	set<IDmut> getMutacionesGen (IDgen ID);
+
+	set<Mutacion, ProbMutaciones> topKMutaciones (int k, string keyword);
+	
+	/* Métodos relacionados con los iteradores */
+	
+	iterator begin();
+	
+	iterator end();
+	
+	iterator lower_bound(string cromosoma, unsigned int posicion);
+	
+	iterator upper_bound(string cromosoma, unsigned int posicion);
+	
+	enfermedad_iterator ebegin();
+	
+	enfermedad_iterator eend();
+	
+	gen_iterator gbegin();
+	
+	gen_iterator gend();
+	
+	//Clases amigas
+private:
+	friend class iterator;
+	friend class gen_iterator;
+	friend class ProbMutaciones;
+};
+
+\endcode
+
+
+Pasamos a detallar cada una de las partes de la práctica.
+
+\section Iteradores.
+
+Se usarán tres iteradores, del clinvar al completo, de genes y de enfermedades
+
+\code
+	class iterator {
+		. . .
+	};
+
+	typedef map<IDenf, Enfermedad>::iterator enfermedad_iterator;	// Nos vale utilizar el iterador del map
+	
+	class gen_iterator {
+		. . .
+	};
+\endcode
+
+En cada iterador se implementan todos los operadores de los que dispone un iterador normal.
+
+\section ProbMutaciones
+
+Para ordenar las mutaciones en los conjuntos y las colas con prioridad se usa el functor ProbMutaciones, que ordena las mutaciones según el valor de CAF
+
+\code
+	(1 - a.getCaf()[0]) > (1 - b.getCaf()[0])
+\endcode
+
+
+
