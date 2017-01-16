@@ -271,7 +271,7 @@ private:
 	 @return devuelve el número de nodos del subárbol que
 	 tiene n como raíz.
 	 
-	 Cuenta el número de nodos en el subárbol cuuya raíz es n.
+	 Cuenta el número de nodos en el subárbol cuya raíz es n.
   */
 	int count(node n) const;
 	
@@ -343,6 +343,7 @@ public:
 		 @pre !null()
 		 */
 		node k_child(int k) const;
+		
 		/**
 		 @brief Devuelve el hijo k-ésimo  del nodo receptor
 		 @pre !null()

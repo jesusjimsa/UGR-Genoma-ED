@@ -48,6 +48,9 @@ public:
 	 */
 	size_type size() const;
 	
+	void sequenceADN(unsigned int tama, const string & adn); // Construir Nme a partir de cadena de ADN
+	
+	void insertar_cadena(const string & cadena);	//Pues eso, insertar cadena
 private:
 	ktree<pair<char,int>,4> el_Nmer; // subsecuencias
 	unsigned int max_long; // Mayor longitud de la cadena representada, esto es, el nivel máximo del árbol
