@@ -54,6 +54,14 @@ public:
 	void insertar_cadena(const string & cadena);	//Pues eso, insertar cadena
 	
 	set<pair<string,int>, OrdenCre> rareNmer(int threshold);
+	
+	set<pair<string,int>, OrdenDecre> commonNmer(int threshold);
+	
+	set<pair<string,int>, OrdenCre > level(int l);
+	
+	bool containsString(const string adn) const; // Devuelve true si la cadena adn está representada en el árbol.
+	
+	bool included(const Nmer reference) const; // Devuelve true si cada nodo de *this está también representado en reference, es decir, si todas las secuencias representadas en el árbol de *this están también incluidas en reference. False en otro caso.
 private:
 	ktree<pair<char,int>,4> el_Nmer; // subsecuencias
 	unsigned int max_long; // Mayor longitud de la cadena representada, esto es, el nivel máximo del árbol
@@ -85,18 +93,25 @@ private:
 			return salida;
 		}
 	};
-	
-	/**
-	 @brief Functor para ordenar por frecuencia un Nmer
-	 
-	 Se utiliza en rareNmer
-	 */
-	class OrdenCre{
-	public:
-		bool operator()(pair<string,int> a, pair<string, int> b){
-			return a.second > b.second;
-		}
-	};
+};
+
+/**
+ @brief Functor para ordenar por frecuencia un Nmer
+ 
+ Se utiliza en rareNmer
+ */
+class OrdenCre{
+public:
+	bool operator()(pair<string,int> a, pair<string, int> b){
+		return a.second > b.second;
+	}
+};
+
+class OrdenDecre{
+public:
+	bool operator()(pair<string,int> a, pair<string, int> b){
+		return a.second < b.second;
+	}
 };
 
 #endif

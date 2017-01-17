@@ -122,7 +122,11 @@ void Nmer::insertar_cadena(const string & cadena){
 	}
 }
 
-set<pair<string,int>, Nmer::OrdenCre> Nmer::rareNmer(int threshold){
+set<pair<string,int>, OrdenCre> Nmer::rareNmer(int threshold){
+	
+}
+
+bool containsString(const string adn) const{
 	
 }
 
