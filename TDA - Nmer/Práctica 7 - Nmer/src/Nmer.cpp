@@ -1,7 +1,7 @@
 #include "Nmer.h"
 #include "ktree.h"
-
 #include <fstream>
+#include <set>
 
 template<typename T, int K>
 extern void recorrido_preorden(typename ktree<T,K>::const_node n);
@@ -111,9 +111,19 @@ void Nmer::insertar_cadena(const string & cadena){
 			(*n_act).second++;
 		}
 		else{
+			etiqueta.first = cadena[i];
+			etiqueta.second = 1;
 			
+			el_Nmer.insert_k_child(n_act, indice, etiqueta);
 		}
+		
+		//descendemos en el árbol, haciendo que n_act sea el nodo que representa cadena[i], esto es bajamos al
+		//hijo correspondiente
 	}
+}
+
+set<pair<string,int>, Nmer::OrdenCre> Nmer::rareNmer(int threshold){
+	
 }
 
 

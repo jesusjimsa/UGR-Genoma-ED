@@ -87,7 +87,7 @@ public:
 	/**
 	 @brief Operador de asignación.
 	 
-	 @param a árbol que se asigna.
+	 @param a árbol que se asigna
 	 
 	 Destruye el contenido previo del receptor y le asigna un
 	 duplicado de a.

@@ -36,11 +36,11 @@ int main(int argc, char *argv[]){
 	
 	cerr << "Borrado correcto" << endl;
 	
-	auto find_mut_prueba = prueba.find_Mut("rs757498880");
+	//auto find_mut_prueba = prueba.find_Mut("rs757498880");
 	
 	cerr << "find mut correcto" << endl;
 	
-	auto find_enf_prueba = prueba.find_Enf("HP:0011198:CN166927");
+	//auto find_enf_prueba = prueba.find_Enf("HP:0011198:CN166927");
 	
 	cerr << "find enf correcto" << endl;
 	

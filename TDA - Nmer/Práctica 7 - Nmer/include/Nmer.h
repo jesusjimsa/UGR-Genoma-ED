@@ -11,6 +11,7 @@
 
 #include "ktree.h"
 #include <string>
+#include <set>
 
 using namespace std;
 
@@ -51,16 +52,20 @@ public:
 	void sequenceADN(unsigned int tama, const string & adn); // Construir Nme a partir de cadena de ADN
 	
 	void insertar_cadena(const string & cadena);	//Pues eso, insertar cadena
+	
+	set<pair<string,int>, OrdenCre> rareNmer(int threshold);
 private:
 	ktree<pair<char,int>,4> el_Nmer; // subsecuencias
 	unsigned int max_long; // Mayor longitud de la cadena representada, esto es, el nivel máximo del árbol
  
-	/** @brief Functor para convertir un string en un pair<char,int>
-	 * se utiliza en loadSerialized
+	/**
+	 @brief Functor para convertir un string en un pair<char,int>
+	 
+	 Se utiliza en loadSerialized
 	 */
 	class String2Base {
 	public:
-		pair<char,int> operator()( const string & cad) {
+		pair<char,int> operator()(const string & cad) {
 			pair<char,int> salida;
 			salida.first = cad[0];
 			salida.second = std::stoi(cad.substr(1));
@@ -68,14 +73,28 @@ private:
 		}
 	};
 	
-	/** @brief Functor para convertir un pair<char,int> en un string
-	 * Necesario para serializar un Nmer.
+	/**
+	 @brief Functor para convertir un pair<char,int> en un string
+	 
+	 Necesario para serializar un Nmer.
 	 */
 	class Base2String {
 	public:
-		string operator()( const pair<char,int> & x) {
+		string operator()(const pair<char,int> & x) {
 			string salida = string(1,x.first) + " " +std::to_string(x.second);
 			return salida;
+		}
+	};
+	
+	/**
+	 @brief Functor para ordenar por frecuencia un Nmer
+	 
+	 Se utiliza en rareNmer
+	 */
+	class OrdenCre{
+	public:
+		bool operator()(pair<string,int> a, pair<string, int> b){
+			return a.second > b.second;
 		}
 	};
 };
