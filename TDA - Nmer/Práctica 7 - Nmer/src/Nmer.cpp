@@ -158,6 +158,7 @@ bool Nmer::containsString(const string adn){
 			indice = 2;
 		if(adn[i] == 'T')
 			indice = 3;
+		
 		n_act = n_act.k_child(indice);
 		
 		if(n_act.null()){
@@ -178,8 +179,27 @@ Nmer & Nmer::operator=(const Nmer & a){		//Operador de asignacion
 }
 
 Nmer Nmer::Prefix(string adn){
-	Nmer devolver;
+	ktree<pair<char,int>,4> devolver_arb(ktree<pair<char,int>,4>(pair<char,int>('-',0)));
+	ktree<pair<char,int>,4>::node n_act(el_Nmer.root());
+	int indice = 0;
 	
+	for(int i = 0; i < adn.length(); i++){
+		if(adn[i] == 'A')
+			indice = 0;
+		if(adn[i] == 'G')
+			indice = 1;
+		if(adn[i] == 'C')
+			indice = 2;
+		if(adn[i] == 'T')
+			indice = 3;
+		
+		n_act = n_act.k_child(indice);
+		
+		if(!n_act.null()){
+			devolver_arb.insert_k_child(n_act, indice, (*n_act));
+		}
+		/////////////////////////////////////////////
+	}
 }
 
 
