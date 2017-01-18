@@ -39,6 +39,8 @@ public:
 	 */
 	void list_Nmer() const;
 	
+	Nmer Prefix(string adn); // Devuelve el Nmer (subarbol) asociado a un prefijo. Por ejemplo, si adn es "ACT", devuelve el Nmer que representa todas las subcadenas que empiezan por "ACT" (ACT*)
+	
 	
 	/** @brief Máxima longitud de los Nmers almacenados
 	 */
@@ -62,6 +64,8 @@ public:
 	bool containsString(const string adn); // Devuelve true si la cadena adn está representada en el árbol.
 	
 	bool included(const Nmer reference) const; // Devuelve true si cada nodo de *this está también representado en reference, es decir, si todas las secuencias representadas en el árbol de *this están también incluidas en reference. False en otro caso.
+	
+	Nmer & operator=(const Nmer & a);	// operador de asignacion
 private:
 	ktree<pair<char,int>,4> el_Nmer; // subsecuencias
 	unsigned int max_long; // Mayor longitud de la cadena representada, esto es, el nivel máximo del árbol

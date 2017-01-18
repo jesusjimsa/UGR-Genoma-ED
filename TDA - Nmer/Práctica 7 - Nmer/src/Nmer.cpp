@@ -1,13 +1,16 @@
 #include "Nmer.h"
 #include "ktree.h"
 #include <fstream>
+#include <iostream>
 #include <set>
+#include <string>
+
+using namespace std;
 
 template<typename T, int K>
 extern void recorrido_preorden(typename ktree<T,K>::const_node n);
 
-
-Nmer::Nmer() {
+Nmer::Nmer(){
 	max_long = 0;
 	el_Nmer = ktree<pair<char,int>,4>(pair<char,int>('-',0));
 	
@@ -31,7 +34,7 @@ bool Nmer::loadSerialized(const string & fichero) {
 		} while (cadena.find("#") == 0 && !fe.eof());
 	 
 		// leemos Nmer_length
-		max_long = std::stoi(cadena);
+		max_long = stoi(cadena);
 	 
 		// leemos cadena serializada
 		getline(fe,cadena,'\n');
@@ -44,9 +47,25 @@ bool Nmer::loadSerialized(const string & fichero) {
 	return false;
 }
 
+//Función para recorrer el árbol en preorden sacada de ejemploKtree.cpp
+void recorrido_preorden(typename ktree<pair<char,int>,4>::const_node n){
+	if (!n.null()){
+		cout << &(*n);
+		
+		typename ktree<pair<char,int>,4>::const_node::child_iterator ini = n.begin();
+		typename ktree<pair<char,int>,4>::const_node::child_iterator fin = n.end();
+		
+		while (ini != fin){
+			recorrido_preorden(*ini);
+			++ini;
+		}
+	}
+}
+
 void Nmer::list_Nmer() const {
 	// implmenentar el recorrido en preorden para el ktree de forma que nos devuelva los Nmers completos y no sólo el nodo.
-	recorrido_preorden<pair<char,int>,4>(el_Nmer.root());
+	cout << "Arbol en preorden" << endl;
+	recorrido_preorden(el_Nmer.root());
 }
 
 unsigned int Nmer::length() const {
@@ -147,6 +166,20 @@ bool Nmer::containsString(const string adn){
 	}
 	
 	return true;
+}
+
+Nmer & Nmer::operator=(const Nmer & a){		//Operador de asignacion
+	if(this != &a){
+		this->el_Nmer = a.el_Nmer;
+		this->max_long = a.max_long;
+	}
+	
+	return (*this);
+}
+
+Nmer Nmer::Prefix(string adn){
+	Nmer devolver;
+	
 }
 
 
