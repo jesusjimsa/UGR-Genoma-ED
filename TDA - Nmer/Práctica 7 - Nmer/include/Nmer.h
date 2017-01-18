@@ -59,7 +59,7 @@ public:
 	
 	set<pair<string,int>, OrdenCre > level(int l);
 	
-	bool containsString(const string adn) const; // Devuelve true si la cadena adn está representada en el árbol.
+	bool containsString(const string adn); // Devuelve true si la cadena adn está representada en el árbol.
 	
 	bool included(const Nmer reference) const; // Devuelve true si cada nodo de *this está también representado en reference, es decir, si todas las secuencias representadas en el árbol de *this están también incluidas en reference. False en otro caso.
 private:

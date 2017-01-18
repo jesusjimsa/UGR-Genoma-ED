@@ -126,9 +126,49 @@ set<pair<string,int>, OrdenCre> Nmer::rareNmer(int threshold){
 	
 }
 
-bool containsString(const string adn) const{
+bool Nmer::containsString(const string adn){
+	ktree<pair<char,int>,4>::node n_act(el_Nmer.root());
+	int indice = 0;
 	
+	for(int i = 0; i < adn.length(); i++){
+		if(adn[i] == 'A')
+			indice = 0;
+		if(adn[i] == 'G')
+			indice = 1;
+		if(adn[i] == 'C')
+			indice = 2;
+		if(adn[i] == 'T')
+			indice = 3;
+		n_act = n_act.k_child(indice);
+		
+		if(n_act.null()){
+			return false;
+		}
+	}
+	
+	return true;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
