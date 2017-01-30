@@ -24,7 +24,8 @@ public:
   */
 	Nmer();
 	
-	/** @brief lectura fichero serializado
+	/**
+	 * @brief lectura fichero serializado
 	 * @param nombre_fichero fichero serializado con extension .srl
 	 *
 	 * Genera a partir del fichero el ktree que contiene todos los kmers asociados a una cadena de ADN
@@ -34,13 +35,19 @@ public:
 	bool loadSerialized(const string & nombre_fichero);
 	
 	
-	/** @brief Imprime los Nmers
+	/** 
+	 * @brief Imprime los Nmers
 	 * @todo Debemos de implementar este método de forma que nos garantizemos que se imprimen todos los Nmers.
 	 */
 	void list_Nmer() const;
 	
-	Nmer Prefix(string adn); // Devuelve el Nmer (subarbol) asociado a un prefijo. Por ejemplo, si adn es "ACT", devuelve el Nmer que representa todas las subcadenas que empiezan por "ACT" (ACT*)
-	
+	/**
+	 @brief Árbol asocidado a una cadena
+	 @param adn subcadena
+	 @return Devuelve el Nmer (subarbol) asociado a un prefijo
+	 Por ejemplo, si adn es "ACT", devuelve el Nmer que representa todas las subcadenas que empiezan por "ACT" (ACT*)
+	 */
+	Nmer Prefix(string adn);
 	
 	/** @brief Máxima longitud de los Nmers almacenados
 	 */
@@ -80,7 +87,7 @@ private:
 		pair<char,int> operator()(const string & cad) {
 			pair<char,int> salida;
 			salida.first = cad[0];
-			salida.second = std::stoi(cad.substr(1));
+			salida.second = stoi(cad.substr(1));
 			return salida;
 		}
 	};
@@ -93,7 +100,7 @@ private:
 	class Base2String {
 	public:
 		string operator()(const pair<char,int> & x) {
-			string salida = string(1,x.first) + " " +std::to_string(x.second);
+			string salida = string(1, x.first) + " " + to_string(x.second);
 			return salida;
 		}
 	};

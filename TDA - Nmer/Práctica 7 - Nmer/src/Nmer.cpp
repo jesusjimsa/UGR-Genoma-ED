@@ -179,26 +179,75 @@ Nmer & Nmer::operator=(const Nmer & a){		//Operador de asignacion
 }
 
 Nmer Nmer::Prefix(string adn){
-	ktree<pair<char,int>,4> devolver_arb(ktree<pair<char,int>,4>(pair<char,int>('-',0)));
-	ktree<pair<char,int>,4>::node n_act(el_Nmer.root());
+	Nmer devolver;
+	ktree<pair<char,int>, 4> arb_copia, arb_dest;
+	ktree<pair<char,int>, 4>::node nodo(el_Nmer.root());
 	int indice = 0;
+	int num_hijos = 0;
+	unsigned int longitud;
 	
-	for(int i = 0; i < adn.length(); i++){
-		if(adn[i] == 'A')
-			indice = 0;
-		if(adn[i] == 'G')
-			indice = 1;
-		if(adn[i] == 'C')
-			indice = 2;
-		if(adn[i] == 'T')
-			indice = 3;
-		
-		n_act = n_act.k_child(indice);
-		
-		if(!n_act.null()){
-			devolver_arb.insert_k_child(n_act, indice, (*n_act));
+	arb_copia = this->el_Nmer;
+	
+	for(int i = 0; i < adn.length(); i++){	//Me muevo al último nodo que indique la cadena
+		switch (adn[i]) {
+			case 'A':
+				indice = 0;
+				break;
+			case 'G':
+				indice = 1;
+				break;
+			case 'C':
+				indice = 2;
+				break;
+			case 'T':
+				indice = 3;
+				break;
+			default:
+				break;
 		}
-		/////////////////////////////////////////////
+		
+		nodo = nodo.k_child(indice);
+	}
+	
+	for(int i = 0; i < 4; i++){	//Calculo el número de hijos del nodo en el que estoy (necesario para prune_k_child)
+		if(!nodo.k_child(i).null()){
+			num_hijos++;
+		}
+	}
+	
+	arb_copia.prune_k_child(nodo, num_hijos, arb_dest);	//Corto la copia del árbol por donde sea necesario
+	
+	devolver.el_Nmer = arb_dest;
+	
+	nodo = arb_dest.root();
+	
+	switch (adn[0]) {
+		case 'A':
+			indice = 0;
+			break;
+		case 'G':
+			indice = 1;
+			break;
+		case 'C':
+			indice = 2;
+			break;
+		case 'T':
+			indice = 3;
+			break;
+		default:
+			break;
+	}
+	
+	nodo = nodo.k_child(indice);
+	
+	typename ktree<pair<char,int>, 4>::node::child_iterator it;
+	
+	for(it = nodo.begin(); it != nodo.end(); it++){
+		nodo = (*it);
+	}
+	
+	while((*nodo).first != '-'){
+		////////////////////////////////
 	}
 }
 
