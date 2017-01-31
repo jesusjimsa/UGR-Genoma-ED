@@ -115,14 +115,22 @@ void Nmer::insertar_cadena(const string & cadena){
 	
 	for(int i = 0; i < cadena.length(); i++){
 		//cadena[i] nos indica el índice del nodo en el nivel i+1
-		if(cadena[i] == 'A')
-			indice = 0;
-		if(cadena[i] == 'G')
-			indice = 1;
-		if(cadena[i] == 'C')
-			indice = 2;
-		if(cadena[i] == 'T')
-			indice = 3;
+		switch (adn[i]) {
+			case 'A':
+				indice = 0;
+				break;
+			case 'G':
+				indice = 1;
+				break;
+			case 'C':
+				indice = 2;
+				break;
+			case 'T':
+				indice = 3;
+				break;
+			default:
+				break;
+		}
 		
 		n_act = n_act.k_child(indice);
 		
@@ -150,14 +158,22 @@ bool Nmer::containsString(const string adn){
 	int indice = 0;
 	
 	for(int i = 0; i < adn.length(); i++){
-		if(adn[i] == 'A')
-			indice = 0;
-		if(adn[i] == 'G')
-			indice = 1;
-		if(adn[i] == 'C')
-			indice = 2;
-		if(adn[i] == 'T')
-			indice = 3;
+		switch (adn[i]) {
+			case 'A':
+				indice = 0;
+				break;
+			case 'G':
+				indice = 1;
+				break;
+			case 'C':
+				indice = 2;
+				break;
+			case 'T':
+				indice = 3;
+				break;
+			default:
+				break;
+		}
 		
 		n_act = n_act.k_child(indice);
 		
@@ -184,7 +200,6 @@ Nmer Nmer::Prefix(string adn){
 	ktree<pair<char,int>, 4>::node nodo(el_Nmer.root());
 	int indice = 0;
 	int num_hijos = 0;
-	unsigned int longitud;
 	
 	arb_copia = this->el_Nmer;
 	
@@ -217,10 +232,6 @@ Nmer Nmer::Prefix(string adn){
 	
 	arb_copia.prune_k_child(nodo, num_hijos, arb_dest);	//Corto la copia del árbol por donde sea necesario
 	
-	devolver.el_Nmer = arb_dest;
-	
-	nodo = arb_dest.root();
-	
 	switch (adn[0]) {
 		case 'A':
 			indice = 0;
@@ -238,19 +249,63 @@ Nmer Nmer::Prefix(string adn){
 			break;
 	}
 	
-	nodo = nodo.k_child(indice);
+	ktree<pair<char,int>,4> arb_Nmer = ktree<pair<char,int>, 4> (pair<char,int>('-',0));	//Creo un árbol con el - en la raíz
 	
-	typename ktree<pair<char,int>, 4>::node::child_iterator it;
+	arb_Nmer.insert_k_child(arb_Nmer.root(), indice, arb_dest);	//Inserto el árbol que hemos obtenido al antes
 	
-	for(it = nodo.begin(); it != nodo.end(); it++){
-		nodo = (*it);
-	}
+	devolver.el_Nmer = arb_Nmer;	//Lo guardo en el Nmer
+	devolver.max_long = profundidadMax(arb_Nmer.root());	//Guardo la longitud de la cadena más larga
 	
-	while((*nodo).first != '-'){
-		////////////////////////////////
-	}
+	return devolver;
 }
 
+int Nmer::maxi(int first, int second, int third, int fourth){
+	int maximo = first;
+	
+	if(second > maximo){
+		maximo = second;
+	}
+	if(third > maximo){
+		maximo = third;
+	}
+	if(fourth > maximo){
+		maximo = fourth;
+	}
+	
+	return maximo;
+}
+
+unsigned int Nmer::profundidadMax(ktree<pair<char,int>, 4>::node hola){
+	if(hola.null()){
+		return 0;
+	}
+	else{
+		unsigned int profA, profG, profC, profT;
+		
+		profA = profG = profC = profT = 0;
+		
+		for(int i = 0; i < 4; i++){
+			switch (i) {
+				case 0:
+					profA += profundidadMax(hola.k_child(i));
+					break;
+				case 1:
+					profG += profundidadMax(hola.k_child(i));
+					break;
+				case 2:
+					profC += profundidadMax(hola.k_child(i));
+					break;
+				case 3:
+					profT += profundidadMax(hola.k_child(i));
+					break;
+				default:
+					break;
+			}
+		}
+		
+		return 1 + maxi(profA, profG, profC, profT);
+	}
+}
 
 
 

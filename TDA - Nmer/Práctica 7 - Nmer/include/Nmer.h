@@ -19,7 +19,8 @@ class Nmer {
 public:
 	typedef unsigned int size_type;
 	
-	/** @brief Constructor primitivo .
+	/**
+	 @brief Constructor primitivo .
 	 Crea un Nmer de longitud maxima 0, con el valor ('-',0) en la raíz
   */
 	Nmer();
@@ -54,13 +55,40 @@ public:
 	unsigned int length()const;
 	
 	
-	/** @brief Número de Nmers almacenados
+	/**
+	 @brief Número de Nmers almacenados
 	 */
 	size_type size() const;
 	
-	void sequenceADN(unsigned int tama, const string & adn); // Construir Nme a partir de cadena de ADN
+	/**
+	 @brief Calcula el máximo de cuatro números
+	 @param first Primer valor
+	 @param second Segundo valor
+	 @param third Tercer valor
+	 @param fourth Cuarto valor
+	 @return El máximo
+	 */
+	int maxi(int first, int second, int third, int fourth);
 	
-	void insertar_cadena(const string & cadena);	//Pues eso, insertar cadena
+	/**
+	 @brief Calcula la profundidad máxima de un árbol
+	 @param hola nodo del que se parte
+	 @return profundidad máxima
+	 */
+	unsigned int profundidadMax(ktree<pair<char,int>, 4>::node hola);
+	
+	/**
+	 @brief Construir Nmer a partir de una cadena de ADN
+	 @param tama Tamaño de la cadena
+	 @param adn Cadena de ADN
+	 */
+	void sequenceADN(unsigned int tama, const string & adn);
+	
+	/**
+	 @brief Inserta el árbol de una cadena de ADN
+	 @param cadena Cadena de ADN
+	 */
+	void insertar_cadena(const string & cadena);
 	
 	set<pair<string,int>, OrdenCre> rareNmer(int threshold);
 	

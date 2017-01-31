@@ -137,7 +137,6 @@ public:
 	
 	/**
 	 @brief Insertar un árbol como hijo k-ésimo  de un nodo.
-	 
 	 @param n nodo del receptor. n != nodo_nulo.
 	 @param k número de hijo de n
 	 @param rama subárbol que se inserta. Es MODIFICADO quedando como árbol vacío tras la inserción-
@@ -148,7 +147,7 @@ public:
 	
 	/**
 	 @brief asignar subarbol. Hace del receptor una copia del subarbol de org con raíz en n
-	 @param n nodo  de org a partir del que se copia. n != nodo_nulo.
+	 @param n nodo de org a partir del que se copia. n != nodo_nulo.
 	 @param org Arbol original (no se modifica).
 	 
 	 Si el arbol receptor contiene elementos, estos son eliminados.
