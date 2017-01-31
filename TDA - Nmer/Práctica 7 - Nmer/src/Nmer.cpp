@@ -115,7 +115,7 @@ void Nmer::insertar_cadena(const string & cadena){
 	
 	for(int i = 0; i < cadena.length(); i++){
 		//cadena[i] nos indica el índice del nodo en el nivel i+1
-		switch (adn[i]) {
+		switch (cadena[i]) {
 			case 'A':
 				indice = 0;
 				break;
@@ -149,12 +149,12 @@ void Nmer::insertar_cadena(const string & cadena){
 	}
 }
 
-set<pair<string,int>, OrdenCre> Nmer::rareNmer(int threshold){
+set<pair<string,int>, Nmer::OrdenCre> Nmer::rareNmer(int threshold){
 	
 }
 
 bool Nmer::containsString(const string adn){
-	ktree<pair<char,int>,4>::node n_act(el_Nmer.root());
+	ktree<pair<char,int>, 4>::node n_act(el_Nmer.root());
 	int indice = 0;
 	
 	for(int i = 0; i < adn.length(); i++){

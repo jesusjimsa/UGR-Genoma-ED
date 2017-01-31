@@ -85,6 +85,30 @@ public:
 	void sequenceADN(unsigned int tama, const string & adn);
 	
 	/**
+	 @brief Functor para ordenar por frecuencia creciente un Nmer
+	 
+	 Se utiliza en rareNmer
+	 */
+	class OrdenCre{
+	public:
+		bool operator()(pair<string,int> a, pair<string, int> b){
+			return a.second > b.second;
+		}
+	};
+	
+	/**
+	 @brief Functor para ordenar por frecuencia decreciente un Nmer
+	 
+	 Se utiliza en rareNmer
+	 */
+	class OrdenDecre{
+	public:
+		bool operator()(pair<string,int> a, pair<string, int> b){
+			return a.second < b.second;
+		}
+	};
+	
+	/**
 	 @brief Inserta el árbol de una cadena de ADN
 	 @param cadena Cadena de ADN
 	 */
@@ -134,23 +158,6 @@ private:
 	};
 };
 
-/**
- @brief Functor para ordenar por frecuencia un Nmer
- 
- Se utiliza en rareNmer
- */
-class OrdenCre{
-public:
-	bool operator()(pair<string,int> a, pair<string, int> b){
-		return a.second > b.second;
-	}
-};
 
-class OrdenDecre{
-public:
-	bool operator()(pair<string,int> a, pair<string, int> b){
-		return a.second < b.second;
-	}
-};
 
 #endif
