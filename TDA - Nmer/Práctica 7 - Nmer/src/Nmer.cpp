@@ -48,18 +48,41 @@ bool Nmer::loadSerialized(const string & fichero) {
 }
 
 //Función para recorrer el árbol en preorden sacada de ejemploKtree.cpp
-void recorrido_preorden(typename ktree<pair<char,int>,4>::const_node n){
+string recorrido_preorden(typename ktree<pair<char,int>, 4>::const_node n){
+	string cadena, gen;
+	
 	if (!n.null()){
-		cout << &(*n);
-		
-		typename ktree<pair<char,int>,4>::const_node::child_iterator ini = n.begin();
-		typename ktree<pair<char,int>,4>::const_node::child_iterator fin = n.end();
+		typename ktree<pair<char,int>, 4>::const_node::child_iterator ini = n.begin();
+		typename ktree<pair<char,int>, 4>::const_node::child_iterator fin = n.end();
 		
 		while (ini != fin){
-			recorrido_preorden(*ini);
+			switch ((*ini).child_number()) {
+				case 0:
+					gen = "A";
+					break;
+				case 1:
+					gen = "G";
+					break;
+				case 2:
+					gen = "C";
+					break;
+				case 3:
+					gen = "T";
+					break;
+				default:
+					break;
+			}
+			
+			cadena += gen;
+			
+			cadena += (recorrido_preorden(*ini) + "\n");
 			++ini;
 		}
 	}
+	
+	cout << cadena;
+	
+	return cadena;
 }
 
 void Nmer::list_Nmer() const {
@@ -149,8 +172,13 @@ void Nmer::insertar_cadena(const string & cadena){
 	}
 }
 
+
 set<pair<string,int>, Nmer::OrdenCre> Nmer::rareNmer(int threshold){
+	set<pair<string,int>, Nmer::OrdenCre> rare;
 	
+	/////////////////////////////////////////////////////////////
+	
+	return set<pair<string,int>, Nmer::OrdenCre>();
 }
 
 bool Nmer::containsString(const string adn){

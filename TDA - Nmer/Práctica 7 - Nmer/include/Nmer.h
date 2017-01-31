@@ -110,10 +110,18 @@ public:
 	
 	/**
 	 @brief Inserta el árbol de una cadena de ADN
-	 @param cadena Cadena de ADN
+	 @param Cadena Cadena de ADN
 	 */
 	void insertar_cadena(const string & cadena);
 	
+	/**
+	 @brief Lista de todas las subcadenas que aparecen menos de threshold veces
+	 @param threshold Número de veces que se sepite el Nmer como mucho
+	 @return Lista de todas las subcadenas que aparecen menos de threshold veces
+	 
+	 Devuelve la lista de todas las subcadenas (no prefijo) que aparecen menos
+	 de threshold veces en el Nmer ordenadas en orden creciente de frecuencia
+	 */
 	set<pair<string,int>, OrdenCre> rareNmer(int threshold);
 	
 	set<pair<string,int>, OrdenDecre> commonNmer(int threshold);
