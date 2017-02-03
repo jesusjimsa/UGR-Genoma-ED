@@ -22,7 +22,7 @@ public:
 	/**
 	 @brief Constructor primitivo .
 	 Crea un Nmer de longitud maxima 0, con el valor ('-',0) en la raíz
-  */
+	*/
 	Nmer();
 	
 	/**
@@ -35,7 +35,7 @@ public:
 	bool loadSerialized(const string & nombre_fichero);
 	
 	
-	/** 
+	/**
 	 @brief Imprime los Nmers
 	 @todo Debemos de implementar este método de forma que nos garantizemos que se imprimen todos los Nmers.
 	 */
@@ -130,6 +130,15 @@ public:
 	 @param cadena Cadena de ADN
 	 */
 	void insertar_cadena(const string & cadena);
+	
+	/**
+	 @brief Rellena el conjunto que se devuelve en rareNmer
+	 @param el_set Conjunto que se está cambiando
+	 @param el_nodo Nodo actual
+	 @param la_cadena El string del conjunto
+	 @param threshold Número de veces que se repite el Nmer como mucho
+	 */
+	void rareSet(set<pair<string,int>, OrdenCre> &el_set, ktree<pair<char, int>, 4>::node el_nodo, string la_cadena, int threshold);
 	
 	/**
 	 @brief Lista de todas las subcadenas que aparecen menos de threshold veces

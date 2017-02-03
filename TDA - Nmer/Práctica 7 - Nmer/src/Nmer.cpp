@@ -183,13 +183,30 @@ void Nmer::insertar_cadena(const string & cadena){
 	}
 }
 
+void Nmer::rareSet(set<pair<string,int>, Nmer::OrdenCre> &el_set, ktree<pair<char, int>, 4>::node el_nodo, string la_cadena, int threshold){
+	string cadena = la_cadena + (*el_nodo).first;
+	int frecuencia = (*el_nodo).second;
+	
+	for(int i = 0; i < 4; i++){
+		if(!el_nodo.k_child(i).null()){
+			rareSet(el_set, el_nodo.k_child(i), cadena, threshold);
+		}
+		else{
+			if((*el_nodo).second < threshold)
+				//Como en el set no puede haber elementos repetidos, da igual que entre varias veces
+				//en este if, solo se insertará una
+				el_set.insert(pair<string,int>(cadena, frecuencia));
+		}
+	}
+}
 
 set<pair<string,int>, Nmer::OrdenCre> Nmer::rareNmer(int threshold){
 	set<pair<string,int>, Nmer::OrdenCre> rare;
+	string cadena;
 	
-	/////////////////////////////////////////////////////////////
+	rareSet(rare, el_Nmer.root(), cadena, threshold);
 	
-	return set<pair<string,int>, Nmer::OrdenCre>();
+	return rare;
 }
 
 bool Nmer::containsString(const string adn){
