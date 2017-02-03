@@ -132,15 +132,6 @@ public:
 	void insertar_cadena(const string & cadena);
 	
 	/**
-	 @brief Rellena el conjunto que se devuelve en rareNmer
-	 @param el_set Conjunto que se está cambiando
-	 @param el_nodo Nodo actual
-	 @param la_cadena El string del conjunto
-	 @param threshold Número de veces que se repite el Nmer como mucho
-	 */
-	void rareSet(set<pair<string,int>, OrdenCre> &el_set, ktree<pair<char, int>, 4>::node el_nodo, string la_cadena, int threshold);
-	
-	/**
 	 @brief Lista todas las subcadenas que aparecen menos de threshold veces
 	 @param threshold Número de veces que se sepite el Nmer como mucho
 	 @return Conjunto de todas las subcadenas que aparecen menos de threshold veces
@@ -151,15 +142,6 @@ public:
 	set<pair<string,int>, OrdenCre> rareNmer(int threshold);
 	
 	/**
-	 @brief Rellena el conjunto que se devuelve en commonNmer
-	 @param el_set Conjunto que se está cambiando
-	 @param el_nodo Nodo actual
-	 @param la_cadena El string del conjunto
-	 @param threshold Número de veces que se repite el Nmer como mínimo
-	 */
-	void commonSet(set<pair<string,int>, OrdenDecre> &el_set, ktree<pair<char, int>, 4>::node el_nodo, string la_cadena, int threshold);
-	
-	/**
 	 @brief Lista todas las subcadenas que aparecen más de threshold veces
 	 @param threshold Número de veces que se repite el Nmer
 	 @return Conjunto de todas las cadenas que aparecen más de threshold veces
@@ -168,15 +150,6 @@ public:
 	 de veces mayor que de threshold veces en el Nmer, ordenadas en orden decreciente de frecuencia.
 	 */
 	set<pair<string,int>, OrdenDecre> commonNmer(int threshold);
-	
-	/**
-	 @brief Rellena el conjunto que se devuelve en level
-	 @param el_set Conjunto que se está cambiando
-	 @param el_nodo Nodo actual
-	 @param la_cadena El string del conjunto
-	 @param l Longitud del Nmer
-	 */
-	void levelSet(set<pair<string,int>, OrdenCre> &el_set, ktree<pair<char, int>, 4>::node el_nodo, string la_cadena, int l);
 	
 	/**
 	 @brief Este método nos devuelve únicamente los Nmers de longitud l
@@ -229,6 +202,24 @@ private:
 			return salida;
 		}
 	};
+	
+	/**
+	 @brief Rellena el conjunto que se devuelve en rareNmer
+	 @param el_set Conjunto que se está cambiando
+	 @param el_nodo Nodo actual
+	 @param la_cadena El string del conjunto
+	 @param threshold Número de veces que se repite el Nmer como mucho
+	 */
+	void rareSet(set<pair<string,int>, OrdenCre> &el_set, ktree<pair<char, int>, 4>::node el_nodo, string la_cadena, int threshold);
+	
+	/**
+	 @brief Rellena el conjunto que se devuelve en commonNmer
+	 @param el_set Conjunto que se está cambiando
+	 @param el_nodo Nodo actual
+	 @param la_cadena El string del conjunto
+	 @param threshold Número de veces que se repite el Nmer como mínimo
+	 */
+	void commonSet(set<pair<string,int>, OrdenDecre> &el_set, ktree<pair<char, int>, 4>::node el_nodo, string la_cadena, int threshold);
 };
 
 

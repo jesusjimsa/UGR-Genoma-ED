@@ -235,31 +235,41 @@ set<pair<string,int>, Nmer::OrdenDecre> Nmer::commonNmer(int threshold){
 	
 }
 
-void Nmer::levelSet(set<pair<string,int>, Nmer::OrdenCre> &el_set, ktree<pair<char, int>, 4>::node el_nodo, string la_cadena, int l){
-	string cadena = la_cadena + (*el_nodo).first;
-	int frecuencia = (*el_nodo).second;
-	
-	for(int i = 0; i < 4; i++){
-		if(!el_nodo.k_child(i).null()){
-			levelSet(el_set, el_nodo.k_child(i), cadena, l);
-		}
-		else{
-			if((*el_nodo.k_child(i)).second == l){
-				//Como en el set no puede haber elementos repetidos, da igual que entre varias veces
-				//en este else, solo se insertará una
-				el_set.insert(pair<string,int>(cadena, frecuencia));
-			}
-		}
-	}
-}
-
 set<pair<string,int>, Nmer::OrdenCre > Nmer::level(int l){
-	set<pair<string,int>, Nmer::OrdenCre> lvl;
+	set<pair<string,int>, Nmer::OrdenCre > devolver;
+	ktree<pair<char,int>, 4>::node nodo, subiendo, raiz;
 	string cadena;
+	int profundidad = 0;
 	
-	levelSet(lvl, el_Nmer.root(), cadena, l);
+	raiz = el_Nmer.root();
 	
-	return lvl;
+	for(auto it = el_Nmer.root().begin(); it != el_Nmer.root().end(); ++it){
+		nodo = (*it);
+		subiendo = nodo;
+		
+		
+		while(subiendo != raiz){
+			subiendo = subiendo.parent();
+			
+			profundidad++;
+		}
+		
+		if(profundidad == l){
+			while(nodo != raiz){
+				cadena += (*nodo).first;
+				nodo = nodo.parent();
+			}
+			
+			cadena.swap(cadena);	//Le doy la vuelta, ya que se han insertado al revés
+			
+			devolver.insert(pair<string, int>(cadena, (*(*it)).second));
+		}
+		
+		profundidad = 0;
+		cadena = "";
+	}
+	
+	return devolver;
 }
 
 bool Nmer::containsString(const string adn){
