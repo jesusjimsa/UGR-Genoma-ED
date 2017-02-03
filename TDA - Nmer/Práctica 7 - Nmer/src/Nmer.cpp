@@ -8,7 +8,7 @@
 using namespace std;
 
 template<typename T, int K>
-extern void recorrido_preorden(typename ktree<T,K>::const_node n);
+extern void recorrido_preorden(typename ktree<T,K>::const_node n, string anterior);
 
 Nmer::Nmer(){
 	max_long = 0;
@@ -48,47 +48,55 @@ bool Nmer::loadSerialized(const string & fichero) {
 }
 
 //Función para recorrer el árbol en preorden sacada de ejemploKtree.cpp
-string recorrido_preorden(typename ktree<pair<char,int>, 4>::const_node n){
-	string cadena, gen;
-	
-	if (!n.null()){
-		typename ktree<pair<char,int>, 4>::const_node::child_iterator ini = n.begin();
-		typename ktree<pair<char,int>, 4>::const_node::child_iterator fin = n.end();
+string recorrido_preorden(typename ktree<pair<char,int>, 4>::const_node n, string anterior){
+	if(n.null()){
+		string vacio;
 		
-		while (ini != fin){
-			switch ((*ini).child_number()) {
-				case 0:
-					gen = "A";
-					break;
-				case 1:
-					gen = "G";
-					break;
-				case 2:
-					gen = "C";
-					break;
-				case 3:
-					gen = "T";
-					break;
-				default:
-					break;
-			}
-			
-			cadena += gen;
-			
-			cadena += (recorrido_preorden(*ini) + "\n");
-			++ini;
-		}
+		return vacio;
 	}
-	
-	cout << cadena;
-	
-	return cadena;
+	else{
+		string cadenaA, cadenaG, cadenaC, cadenaT;
+		
+		cadenaA = cadenaG = cadenaC = cadenaT = anterior;
+		
+		for(int i = 0; i < 4; i++){
+			if(!n.k_child(i).null()){
+				switch (i) {
+					case 0:
+						cout << cadenaA << endl;
+						cadenaA += "A";
+						cadenaA += recorrido_preorden(n.k_child(i), cadenaA);
+						break;
+					case 1:
+						cout << cadenaG << endl;
+						cadenaG += "G";
+						cadenaG += recorrido_preorden(n.k_child(i), cadenaG);
+						break;
+					case 2:
+						cout << cadenaC << endl;
+						cadenaC += "C";
+						cadenaC += recorrido_preorden(n.k_child(i), cadenaC);
+						break;
+					case 3:
+						cout << cadenaT << endl;
+						cadenaT += "T";
+						cadenaT += recorrido_preorden(n.k_child(i), cadenaT);
+						break;
+					default:
+						break;
+				}
+			}
+		}
+		
+		return anterior;
+	}
 }
 
 void Nmer::list_Nmer() const {
+	string cadena;
 	// implmenentar el recorrido en preorden para el ktree de forma que nos devuelva los Nmers completos y no sólo el nodo.
 	cout << "Arbol en preorden" << endl;
-	recorrido_preorden(el_Nmer.root());
+	recorrido_preorden(el_Nmer.root(), cadena);
 }
 
 unsigned int Nmer::length() const {
@@ -107,7 +115,7 @@ void Nmer::sequenceADN(unsigned int tama, const string & adn){
 	el_Nmer = ktree<pair<char,int>,4>(pair<char,int>('-',0));
 	
 	for(int i = 0; i < adn.size(); i++){
-		//Se guardan los caracteres en la un vector auxiliar
+		//Se guardan los caracteres en un vector auxiliar
 		for(int j = 0; j < tama; j++){
 			cadena_aux.push_back(adn[j]);
 		}
@@ -122,7 +130,6 @@ void Nmer::sequenceADN(unsigned int tama, const string & adn){
 		
 		//Se limpia el vector de char auxiliar
 		cadena_aux.clear();
-		
 		insertar_cadena(cadenas[i]);
 	}
 }
@@ -155,21 +162,20 @@ void Nmer::insertar_cadena(const string & cadena){
 				break;
 		}
 		
-		n_act = n_act.k_child(indice);
-		
-		if(!n_act.null()){
-			(*n_act).second++;
+		if(!n_act.k_child(indice).null()){
+			(*n_act.k_child(indice)).second++;
 		}
 		else{
-			ktree<pair<char,int>,4>::node papa = n_act.parent();
 			etiqueta.first = cadena[i];
 			etiqueta.second = 1;
 			
-			el_Nmer.insert_k_child(papa, indice, etiqueta);
+			el_Nmer.insert_k_child(n_act, indice, etiqueta);
 		}
+		
 		
 		//descendemos en el árbol, haciendo que n_act sea el nodo que representa cadena[i], esto es bajamos al
 		//hijo correspondiente
+		n_act = n_act.k_child(indice);
 	}
 	
 	if(cadena.length() > max_long){

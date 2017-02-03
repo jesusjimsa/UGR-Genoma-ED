@@ -16,4 +16,6 @@ int main(){
 	
 	jeje.sequenceADN(4, "ATCGTAGCTGATCGATGTATCGTAGCTGTGGGATAGTC");
 	cout << jeje.length() << endl;
+	
+	jeje.list_Nmer();
 }
