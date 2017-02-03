@@ -455,37 +455,3 @@ bool Nmer::included(const Nmer reference) const{
 	
 	return incluido;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

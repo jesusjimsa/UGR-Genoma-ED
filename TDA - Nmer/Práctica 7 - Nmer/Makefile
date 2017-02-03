@@ -13,11 +13,11 @@ CPPFLAGS = -Wall -g -I$(INC) -c
 all: $(BIN)/prueba
 
 # ************ Generación de documentación ******************
-#documentacion:
-#doxygen doc/doxys/doxPractica.txt
+documentacion:
+	doxygen doc/doxys/doxPractica.txt
 
 
-## ************ Compilación de módulos ************
+# ************ Compilación de módulos ************
 $(BIN)/prueba: $(OBJ)/prueba.o $(LIB)/libNmer.a $(INC)/ktree.h
 	$(CXX) -o $(BIN)/prueba $(OBJ)/prueba.o -I$(INC) -L$(LIB) -lNmer
 

@@ -38,21 +38,21 @@ int main(){
 	
 	cout << "\nRare Nmer:" << BLUE << endl;
 	for(auto it = rare.begin(); it != rare.end(); ++it){
-		cout << "\t" << (*it).first << endl;
-		cout << "\t" << (*it).second << endl;
+		cout << "\t" << (*it).first;
+		cout << " " << (*it).second << endl;
 		
 	}
 	
 	cout << BLACK << "\nCommon Nmer" << GREEN << endl;
 	for(auto it = common.begin(); it != common.end(); ++it){
-		cout << "\t" << (*it).first << endl;
-		cout << "\t" << (*it).second << endl;
+		cout << "\t" << (*it).first;
+		cout << " " << (*it).second << endl;
 	}
 	
 	cout << BLACK << "\nLevel" << RED << endl;
 	for(auto it = level.begin(); it != level.end(); ++it){
-		cout << "\t" << (*it).first << endl;
-		cout << "\t" << (*it).second << endl;
+		cout << "\t" << (*it).first;
+		cout << " " << (*it).second << endl;
 	}
 	
 	cout << BLACK;

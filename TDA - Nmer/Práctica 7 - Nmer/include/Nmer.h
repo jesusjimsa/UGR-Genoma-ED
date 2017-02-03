@@ -159,6 +159,20 @@ public:
 	set<pair<string,int>, OrdenCre > level(int l);
 	
 	/**
+	 @brief Distancia entre dos Nmer
+	 @param otro Otro Nmer
+	 @return Distancia entre dos Nmer
+	 */
+	float Distance(Nmer otro);
+	
+	/**
+	 @brief Unión entre dos Nmer
+	 @param reference Nmer con el que se une
+	 @return Nmer unido
+	 */
+	Nmer Union(const Nmer reference);
+	
+	/**
 	 @brief Comprueba si la cadena está en el Nmer
 	 @param adn Cadena con un Nmer
 	 @return True si está contenida, false en el caso contrario
