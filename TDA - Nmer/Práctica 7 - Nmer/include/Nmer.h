@@ -170,6 +170,15 @@ public:
 	set<pair<string,int>, OrdenDecre> commonNmer(int threshold);
 	
 	/**
+	 @brief Rellena el conjunto que se devuelve en level
+	 @param el_set Conjunto que se está cambiando
+	 @param el_nodo Nodo actual
+	 @param la_cadena El string del conjunto
+	 @param l Longitud del Nmer
+	 */
+	void levelSet(set<pair<string,int>, OrdenCre> &el_set, ktree<pair<char, int>, 4>::node el_nodo, string la_cadena, int l);
+	
+	/**
 	 @brief Este método nos devuelve únicamente los Nmers de longitud l
 	 @param l Longitud del Nmer
 	 @return Nmers de longitud l ordenados por frecuencia

@@ -235,6 +235,33 @@ set<pair<string,int>, Nmer::OrdenDecre> Nmer::commonNmer(int threshold){
 	
 }
 
+void Nmer::levelSet(set<pair<string,int>, Nmer::OrdenCre> &el_set, ktree<pair<char, int>, 4>::node el_nodo, string la_cadena, int l){
+	string cadena = la_cadena + (*el_nodo).first;
+	int frecuencia = (*el_nodo).second;
+	
+	for(int i = 0; i < 4; i++){
+		if(!el_nodo.k_child(i).null()){
+			levelSet(el_set, el_nodo.k_child(i), cadena, l);
+		}
+		else{
+			if((*el_nodo.k_child(i)).second == l){
+				//Como en el set no puede haber elementos repetidos, da igual que entre varias veces
+				//en este else, solo se insertará una
+				el_set.insert(pair<string,int>(cadena, frecuencia));
+			}
+		}
+	}
+}
+
+set<pair<string,int>, Nmer::OrdenCre > Nmer::level(int l){
+	set<pair<string,int>, Nmer::OrdenCre> lvl;
+	string cadena;
+	
+	levelSet(lvl, el_Nmer.root(), cadena, l);
+	
+	return lvl;
+}
+
 bool Nmer::containsString(const string adn){
 	ktree<pair<char,int>, 4>::node n_act(el_Nmer.root());
 	int indice = 0;
