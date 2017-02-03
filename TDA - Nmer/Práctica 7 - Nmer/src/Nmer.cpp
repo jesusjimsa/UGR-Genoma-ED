@@ -170,6 +170,10 @@ void Nmer::insertar_cadena(const string & cadena){
 		//descendemos en el árbol, haciendo que n_act sea el nodo que representa cadena[i], esto es bajamos al
 		//hijo correspondiente
 	}
+	
+	if(cadena.length() > max_long){
+		max_long = (unsigned int)cadena.length();
+	}
 }
 
 
@@ -303,8 +307,8 @@ int Nmer::maxi(int first, int second, int third, int fourth){
 	return maximo;
 }
 
-unsigned int Nmer::profundidadMax(ktree<pair<char,int>, 4>::node hola){
-	if(hola.null()){
+unsigned int Nmer::profundidadMax(ktree<pair<char,int>, 4>::node nodo){
+	if(nodo.null()){
 		return 0;
 	}
 	else{
@@ -315,16 +319,16 @@ unsigned int Nmer::profundidadMax(ktree<pair<char,int>, 4>::node hola){
 		for(int i = 0; i < 4; i++){
 			switch (i) {
 				case 0:
-					profA += profundidadMax(hola.k_child(i));
+					profA += profundidadMax(nodo.k_child(i));
 					break;
 				case 1:
-					profG += profundidadMax(hola.k_child(i));
+					profG += profundidadMax(nodo.k_child(i));
 					break;
 				case 2:
-					profC += profundidadMax(hola.k_child(i));
+					profC += profundidadMax(nodo.k_child(i));
 					break;
 				case 3:
-					profT += profundidadMax(hola.k_child(i));
+					profT += profundidadMax(nodo.k_child(i));
 					break;
 				default:
 					break;
@@ -334,17 +338,21 @@ unsigned int Nmer::profundidadMax(ktree<pair<char,int>, 4>::node hola){
 		return 1 + maxi(profA, profG, profC, profT);
 	}
 }
+/*
+set<pair<string,int>, Nmer::OrdenCre > Nmer::level(int l){
+	ktree<pair<char,int>,4>::node nodo = el_Nmer.root();
+	set<pair<string,int>, Nmer::OrdenCre > nooo;
+	string yggygyr;
+	
+	return nooo;
+}
 
 
 
 
 
 
-
-
-
-
-
+*/
 
 
 

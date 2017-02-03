@@ -75,7 +75,7 @@ public:
 	 @param hola nodo del que se parte
 	 @return profundidad máxima
 	 */
-	unsigned int profundidadMax(ktree<pair<char,int>, 4>::node hola);
+	unsigned int profundidadMax(ktree<pair<char,int>, 4>::node nodo);
 	
 	/**
 	 @brief Construir Nmer a partir de una cadena de ADN
@@ -110,7 +110,7 @@ public:
 	
 	/**
 	 @brief Inserta el árbol de una cadena de ADN
-	 @param Cadena Cadena de ADN
+	 @param cadena Cadena de ADN
 	 */
 	void insertar_cadena(const string & cadena);
 	
@@ -126,6 +126,11 @@ public:
 	
 	set<pair<string,int>, OrdenDecre> commonNmer(int threshold);
 	
+	/**
+	 @brief Este método nos devuelve únicamente los Nmers de longitud l
+	 @param l Longitud del Nmer
+	 @return Nmers de longitud l ordenados por frecuencia
+	 */
 	set<pair<string,int>, OrdenCre > level(int l);
 	
 	bool containsString(const string adn); // Devuelve true si la cadena adn está representada en el árbol.

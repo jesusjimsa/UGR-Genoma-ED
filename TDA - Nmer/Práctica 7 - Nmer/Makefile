@@ -1,32 +1,41 @@
-OBJ = obj
-BIN = bin
-INC = include
 SRC = src
-CPPFLAGS = g++ -std=c++11 -c -O3 -g
+INC = include
+OBJ = obj
+LIB = lib
+BIN = bin
+CXX = g++ -std=c++11
+AR = ar rvs
+AR_MACOSX = libtool -static -o  # Para MACs
+CPPFLAGS = -Wall -g -I$(INC) -c
 
-#Creación de ejecutables
 
-$(BIN)/principal : $(OBJ)/principal.o $(OBJ)/enfermedad.o $(OBJ)/mutacion.o $(OBJ)/clinvar.o
-	g++ -std=c++11 -g -O3 -o $(BIN)/principal $(OBJ)/principal.o $(OBJ)/enfermedad.o $(OBJ)/mutacion.o $(OBJ)/clinvar.o
 
-#Creación de archivos objeto
+all: $(BIN)/prueba
 
-$(OBJ)/principal.o: $(SRC)/principal.cpp
-	$(CPPFLAGS) $(SRC)/principal.cpp -o $(OBJ)/principal.o -Iinclude/
+# ************ Generación de documentación ******************
+#documentacion:
+#doxygen doc/doxys/doxPractica.txt
 
-$(OBJ)/enfermedad.o: $(SRC)/enfermedad.cpp
-	$(CPPFLAGS) $(SRC)/enfermedad.cpp -o $(OBJ)/enfermedad.o -Iinclude/
 
-$(OBJ)/mutacion.o: $(SRC)/mutacion.cpp
-	$(CPPFLAGS) $(SRC)/mutacion.cpp -o $(OBJ)/mutacion.o -Iinclude/
+## ************ Compilación de módulos ************
+$(BIN)/prueba: $(OBJ)/prueba.o $(LIB)/libNmer.a $(INC)/ktree.h
+	$(CXX) -o $(BIN)/prueba $(OBJ)/prueba.o -I$(INC) -L$(LIB) -lNmer
 
-$(OBJ)/clinvar.o: $(SRC)/clinvar.cpp
-	$(CPPFLAGS) $(SRC)/clinvar.cpp -o $(OBJ)/clinvar.o -Iinclude/
+$(OBJ)/prueba.o: $(SRC)/prueba.cpp
+	$(CXX) $(CPPFLAGS)  -o $(OBJ)/prueba.o $(SRC)/prueba.cpp
 
-#Limpieza de archivos objeto, ejecutables y bibliotecas
+$(LIB)/libNmer.a: $(OBJ)/Nmer.o
+	$(AR_MACOSX) $(LIB)/libNmer.a $(OBJ)/Nmer.o
 
-clean:
-	echo "Limpiando..."
-	rm $(OBJ)/*
-mrproper: clean
-	rm $(BIN)/*
+$(OBJ)/Nmer.o: $(SRC)/Nmer.cpp $(INC)/Nmer.h
+	$(CXX) $(CPPFLAGS)  -o $(OBJ)/Nmer.o $(SRC)/Nmer.cpp
+
+# ************ Limpieza ************
+clean :
+	-rm $(OBJ)/* $(SRC)/*~ $(INC)/*~ ./*~
+
+clean_bin : clean
+	-rm $(BIN)/*
+
+clean_doc : clean
+	-rm doc/html/* doc/latex/*

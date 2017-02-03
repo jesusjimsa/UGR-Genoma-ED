@@ -368,9 +368,9 @@ public:
 		 */
 		int child_number( ) const;
 		
-		
 		/**
 		 @brief Operador de asignación
+
 		 @param n el nodo a asignar
 		 */
 		node & operator=(const node & n);
