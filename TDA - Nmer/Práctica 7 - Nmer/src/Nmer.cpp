@@ -183,7 +183,7 @@ void Nmer::insertar_cadena(const string & cadena){
 	}
 }
 
-void Nmer::rareSet(set<pair<string,int>, Nmer::OrdenCre> &el_set, ktree<pair<char, int>, 4>::node el_nodo, string la_cadena, int threshold){
+void Nmer::rareSet(set<pair<string,int>, Nmer::OrdenCre> &el_set, ktree<pair<char, int>, 4>::node el_nodo, string la_cadena, const int threshold){
 	string cadena = la_cadena + (*el_nodo).first;
 	int frecuencia = (*el_nodo).second;
 	
@@ -207,6 +207,32 @@ set<pair<string,int>, Nmer::OrdenCre> Nmer::rareNmer(int threshold){
 	rareSet(rare, el_Nmer.root(), cadena, threshold);
 	
 	return rare;
+}
+
+void Nmer::commonSet(set<pair<string,int>, Nmer::OrdenDecre> &el_set, ktree<pair<char, int>, 4>::node el_nodo, string la_cadena, const int threshold){
+	string cadena = la_cadena + (*el_nodo).first;
+	int frecuencia = (*el_nodo).second;
+	
+	for(int i = 0; i < 4; i++){
+		if(!el_nodo.k_child(i).null() && (*el_nodo.k_child(i)).second > threshold){
+			commonSet(el_set, el_nodo.k_child(i), cadena, threshold);
+		}
+		else{
+			//Como en el set no puede haber elementos repetidos, da igual que entre varias veces
+			//en este else, solo se insertará una
+			el_set.insert(pair<string,int>(cadena, frecuencia));
+		}
+	}
+}
+
+set<pair<string,int>, Nmer::OrdenDecre> Nmer::commonNmer(int threshold){
+	set<pair<string,int>, Nmer::OrdenDecre> common;
+	string cadena;
+	
+	commonSet(common, el_Nmer.root(), cadena, threshold);
+	
+	return common;
+	
 }
 
 bool Nmer::containsString(const string adn){
