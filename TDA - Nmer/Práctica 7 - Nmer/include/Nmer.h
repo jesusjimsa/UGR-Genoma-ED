@@ -26,19 +26,18 @@ public:
 	Nmer();
 	
 	/**
-	 * @brief lectura fichero serializado
-	 * @param nombre_fichero fichero serializado con extension .srl
-	 *
-	 * Genera a partir del fichero el ktree que contiene todos los kmers asociados a una cadena de ADN
-	 *
-	 * La cadena original viene descrita en el fichero serializado
+	 @brief lectura fichero serializado
+	 @param nombre_fichero fichero serializado con extension .srl
+	 
+	 Genera a partir del fichero el ktree que contiene todos los kmers asociados a una cadena de ADN
+	 La cadena original viene descrita en el fichero serializado
 	 */
 	bool loadSerialized(const string & nombre_fichero);
 	
 	
 	/** 
-	 * @brief Imprime los Nmers
-	 * @todo Debemos de implementar este método de forma que nos garantizemos que se imprimen todos los Nmers.
+	 @brief Imprime los Nmers
+	 @todo Debemos de implementar este método de forma que nos garantizemos que se imprimen todos los Nmers.
 	 */
 	void list_Nmer() const;
 	
@@ -50,10 +49,28 @@ public:
 	 */
 	Nmer Prefix(string adn);
 	
-	/** @brief Máxima longitud de los Nmers almacenados
+	/**
+	 @brief Máxima longitud de los Nmers almacenados
 	 */
 	unsigned int length()const;
 	
+	/**
+	 @brief Comprueba si this está contenido en reference
+	 @param reference Árbol que se comprueba
+	 @return true si está incluido, false si no lo está
+	 
+	 Devuelve true si cada nodo de *this está también representado en reference, es decir, si todas las
+	 secuencias representadas en el árbol de *this están también incluidas en reference. False en otro caso.
+	 */
+	bool included(const Nmer reference) const;
+	
+	/**
+	 @brief Compara dos arboles a partir de un nodo de cada uno
+	 @param uno Un árbol
+	 @param otro Otro árbol
+	 @return Devuelve true si otro contiene a uno, false en caso contrario
+	 */
+	bool compararNmers(ktree<pair<char,int>,4>::const_node uno, ktree<pair<char,int>,4>::const_node otro) const;
 	
 	/**
 	 @brief Número de Nmers almacenados
@@ -66,16 +83,16 @@ public:
 	 @param second Segundo valor
 	 @param third Tercer valor
 	 @param fourth Cuarto valor
-	 @return El máximo
+	 @return El máximo de los cuatro
 	 */
 	int maxi(int first, int second, int third, int fourth);
 	
 	/**
 	 @brief Calcula la profundidad máxima de un árbol
-	 @param hola nodo del que se parte
-	 @return profundidad máxima
+	 @param nodo Nodo del que se parte
+	 @return Profundidad máxima
 	 */
-	unsigned int profundidadMax(ktree<pair<char,int>, 4>::node nodo);
+	unsigned int profundidadMax(const ktree<pair<char,int>, 4>::node nodo);
 	
 	/**
 	 @brief Construir Nmer a partir de una cadena de ADN
@@ -133,11 +150,19 @@ public:
 	 */
 	set<pair<string,int>, OrdenCre > level(int l);
 	
-	bool containsString(const string adn); // Devuelve true si la cadena adn está representada en el árbol.
+	/**
+	 @brief Comprueba si la cadena está en el Nmer
+	 @param adn Cadena con un Nmer
+	 @return True si está contenida, false en el caso contrario
+	 */
+	bool containsString(const string adn);
 	
-	bool included(const Nmer reference) const; // Devuelve true si cada nodo de *this está también representado en reference, es decir, si todas las secuencias representadas en el árbol de *this están también incluidas en reference. False en otro caso.
-	
-	Nmer & operator=(const Nmer & a);	// operador de asignacion
+	/**
+	 @brief Operador de asignación
+	 @param a Otro Nmer
+	 @return Guarda el a en this
+	 */
+	Nmer & operator=(const Nmer & a);
 private:
 	ktree<pair<char,int>,4> el_Nmer; // subsecuencias
 	unsigned int max_long; // Mayor longitud de la cadena representada, esto es, el nivel máximo del árbol

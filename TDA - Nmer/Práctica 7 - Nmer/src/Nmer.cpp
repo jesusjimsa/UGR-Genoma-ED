@@ -161,10 +161,11 @@ void Nmer::insertar_cadena(const string & cadena){
 			(*n_act).second++;
 		}
 		else{
+			ktree<pair<char,int>,4>::node papa = n_act.parent();
 			etiqueta.first = cadena[i];
 			etiqueta.second = 1;
 			
-			el_Nmer.insert_k_child(n_act, indice, etiqueta);
+			el_Nmer.insert_k_child(papa, indice, etiqueta);
 		}
 		
 		//descendemos en el árbol, haciendo que n_act sea el nodo que representa cadena[i], esto es bajamos al
@@ -281,12 +282,14 @@ Nmer Nmer::Prefix(string adn){
 			break;
 	}
 	
-	ktree<pair<char,int>,4> arb_Nmer = ktree<pair<char,int>, 4> (pair<char,int>('-',0));	//Creo un árbol con el - en la raíz
+	//ktree<pair<char,int>,4> arb_Nmer;
 	
-	arb_Nmer.insert_k_child(arb_Nmer.root(), indice, arb_dest);	//Inserto el árbol que hemos obtenido al antes
+	//arb_Nmer.insert_k_child(arb_Nmer.root(), indice, arb_dest);	//Inserto el árbol que hemos obtenido antes
 	
-	devolver.el_Nmer = arb_Nmer;	//Lo guardo en el Nmer
-	devolver.max_long = profundidadMax(arb_Nmer.root());	//Guardo la longitud de la cadena más larga
+	devolver.el_Nmer.insert_k_child(el_Nmer.root(), indice, arb_dest);
+	
+	//devolver.el_Nmer = arb_Nmer;	//Lo guardo en el Nmer
+	devolver.max_long = profundidadMax(el_Nmer.root());	//Guardo la longitud de la cadena más larga
 	
 	return devolver;
 }
@@ -307,7 +310,7 @@ int Nmer::maxi(int first, int second, int third, int fourth){
 	return maximo;
 }
 
-unsigned int Nmer::profundidadMax(ktree<pair<char,int>, 4>::node nodo){
+unsigned int Nmer::profundidadMax(const ktree<pair<char,int>, 4>::node nodo){
 	if(nodo.null()){
 		return 0;
 	}
@@ -338,13 +341,33 @@ unsigned int Nmer::profundidadMax(ktree<pair<char,int>, 4>::node nodo){
 		return 1 + maxi(profA, profG, profC, profT);
 	}
 }
-/*
-set<pair<string,int>, Nmer::OrdenCre > Nmer::level(int l){
-	ktree<pair<char,int>,4>::node nodo = el_Nmer.root();
-	set<pair<string,int>, Nmer::OrdenCre > nooo;
-	string yggygyr;
+
+bool Nmer::compararNmers(ktree<pair<char,int>,4>::const_node uno, ktree<pair<char,int>,4>::const_node otro) const{
+	if(uno.null()){
+		return true;
+	}
 	
-	return nooo;
+	if(otro.null()){
+		return false;
+	}
+	
+	for(int i = 0; i < 4; i++){
+		if(!compararNmers(uno.k_child(i), otro.k_child(i))){
+			return false;
+		}
+	}
+	
+	return true;
+}
+
+bool Nmer::included(const Nmer reference) const{
+	bool incluido = false;
+	
+	if(max_long < reference.max_long){
+		incluido = compararNmers(el_Nmer.root(), reference.el_Nmer.root());
+	}
+	
+	return incluido;
 }
 
 
@@ -352,7 +375,17 @@ set<pair<string,int>, Nmer::OrdenCre > Nmer::level(int l){
 
 
 
-*/
+
+
+
+
+
+
+
+
+
+
+
 
 
 

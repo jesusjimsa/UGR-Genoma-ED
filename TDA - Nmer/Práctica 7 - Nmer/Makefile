@@ -32,9 +32,9 @@ $(OBJ)/Nmer.o: $(SRC)/Nmer.cpp $(INC)/Nmer.h
 
 # ************ Limpieza ************
 clean :
-	-rm $(OBJ)/* $(SRC)/*~ $(INC)/*~ ./*~
+	-rm $(OBJ)/*
 
-clean_bin : clean
+mrproper : clean
 	-rm $(BIN)/*
 
 clean_doc : clean

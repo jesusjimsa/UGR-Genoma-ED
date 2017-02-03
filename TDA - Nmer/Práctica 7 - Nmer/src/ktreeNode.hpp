@@ -363,6 +363,7 @@ int ktree<T,K>::const_node::child_number( ) const{
 		}
 	}
 	cout << "Error n no es hijo de su supuesto padre" << endl;
+	return 0;	//Añadido por Jesús, para evitar un warning al compilar
 }
 
 
